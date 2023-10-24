@@ -22,3 +22,5 @@ Launch development server:
 ```shell
 ng serve
 ```
+
+After this command, app should be running on `http://localhost:4200/` with hot reload.
