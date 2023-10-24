@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._titleService.setTitle("Organizer 2000 | Messaging");
+    this._titleService.setTitle("Organizer 2000");
     this.userService.check();
   }
 
