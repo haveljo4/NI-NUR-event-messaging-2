@@ -1,0 +1,15 @@
+.filter-field {
+  width: calc(100% - 1.5rem);
+  margin: 0.5rem 0.75rem 0 0.75rem;
+}
+.table-div {
+  margin-bottom: 22rem;
+  table {
+    width: 100%;
+    .mat-row {
+      &:hover {
+        background-color: #F5F5F5;
+      }
+    }
+  }
+}

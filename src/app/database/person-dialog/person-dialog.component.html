@@ -1,0 +1,32 @@
+<!-- TODO - add to angular forms -->
+
+<h1 mat-dialog-title>{{data.type}} Person</h1>
+<mat-dialog-content class="mat-typography">
+  <p>Enter full name:</p>
+  <mat-form-field appearance="fill">
+    <mat-label>First Name</mat-label>
+    <input matInput [(ngModel)]="person.firstName">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Last Name</mat-label>
+    <input matInput [(ngModel)]="person.lastName">
+  </mat-form-field>
+  <p>Select group:</p>
+  <mat-form-field appearance="fill" class="wide-field">
+    <mat-label>Select</mat-label>
+    <mat-select [(ngModel)]="person.groupId">
+      <mat-option *ngFor="let group of data.groups" [value]="group.id">
+        {{group.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <p>Enter phone number:</p>
+  <mat-form-field appearance="fill" class="wide-field">
+    <mat-label>Phone Number</mat-label>
+    <input matInput [(ngModel)]="person.phoneNumber">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]=null>Cancel</button>
+  <button mat-button [mat-dialog-close]="person" cdkFocusInitial>{{data.type}}</button>
+</mat-dialog-actions>

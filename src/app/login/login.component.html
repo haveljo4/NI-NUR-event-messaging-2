@@ -1,0 +1,27 @@
+<div class="content">
+  <mat-card class="mat-elevation-z4">
+    <mat-card-title>
+      Login
+    </mat-card-title>
+    <mat-card-content>
+
+      <mat-form-field class="wide-field">
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="credentialsForm.username">
+      </mat-form-field>
+
+      <mat-form-field class="wide-field">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput [(ngModel)]="credentialsForm.password">
+      </mat-form-field>
+
+      <div class="button-div">
+        <button mat-button (click)="login()" [disabled]="isLogging">
+          <mat-spinner diameter="27.5" *ngIf="isLogging"></mat-spinner>
+          <span *ngIf="!isLogging">Login</span>
+        </button>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
+</div>

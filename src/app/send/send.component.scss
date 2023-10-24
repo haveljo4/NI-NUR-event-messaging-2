@@ -1,0 +1,9 @@
+@import "../../styles/variables";
+
+.content {
+  padding: $content-padding;
+  max-width: $content-max-width;
+  .wide-field {
+    width: 100%;
+  }
+}
