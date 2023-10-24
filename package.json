@@ -1,5 +1,5 @@
 {
-  "name": "messaging-angular",
+  "name": "event-messaging",
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",

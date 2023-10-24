@@ -10,7 +10,7 @@ import { UserService } from "./services/user.service";
 })
 export class AppComponent implements OnInit {
 
-  title = "messaging-angular";
+  title = "event-messaging";
 
   constructor(
     private _titleService: Title,
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._titleService.setTitle("Samanet | Messaging");
+    this._titleService.setTitle("Organizer 2000 | Messaging");
     this.userService.check();
   }
 

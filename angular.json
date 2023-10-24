@@ -6,29 +6,16 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "messaging-angular": {
+    "event-messaging": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
-          "lintFix": true
+          "style": "scss"
         },
         "@schematics/angular:application": {
           "strict": true
         },
-        "@schematics/angular:directive": {
-          "lintFix": true
-        },
-        "@schematics/angular:pipe": {
-          "lintFix": true
-        },
-        "@schematics/angular:class": {
-          "lintFix": true
-        },
         "@schematics/angular:module": {
-          "lintFix": true
-        },
-        "@schematics/angular:service": {
           "lintFix": true
         }
       },
@@ -39,7 +26,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/messaging-angular",
+            "outputPath": "dist/event-messaging",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -94,10 +81,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "messaging-angular:build:production"
+              "browserTarget": "event-messaging:build:production"
             },
             "development": {
-              "browserTarget": "messaging-angular:build:development"
+              "browserTarget": "event-messaging:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -105,7 +92,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "messaging-angular:build"
+            "browserTarget": "event-messaging:build"
           }
         },
         "test": {
@@ -146,10 +133,10 @@
           },
           "configurations": {
             "production": {
-              "devServerTarget": "messaging-angular:serve:production"
+              "devServerTarget": "event-messaging:serve:production"
             },
             "development": {
-              "devServerTarget": "messaging-angular:serve:development"
+              "devServerTarget": "event-messaging:serve:development"
             }
           },
           "defaultConfiguration": "development"

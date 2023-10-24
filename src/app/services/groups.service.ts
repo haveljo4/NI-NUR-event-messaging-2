@@ -1,36 +1,43 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 
-import { Observable } from "rxjs";
+import { Observable, from } from "rxjs";
 
 import { Group } from "../models/group";
 import { GroupForm } from "../models/forms/group-form";
 import { MessageResponse } from "../models/responses/message-response";
+import { FakeHttpService } from "./fake-http.service";
+
+import { GROUPS } from "../mocks/groups";
 
 @Injectable({
   providedIn: "root"
 })
 export class GroupsService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _fakeHttp: FakeHttpService) { }
 
   getAllGroups(): Observable<Group[]> {
-    return this._http.get<Group[]>("/api/allGroups");
+    return from(this._fakeHttp.send<Group[]>("GET", "/api/allGroups", GROUPS));
   }
 
-  getGroup(id: number): Observable<Group> {
-    return this._http.get<Group>(`/api/group/${id}`);
+  getGroup(id: number): Observable<Group | undefined> {
+    return from(
+      this._fakeHttp.send<Group | undefined>(
+        "GET",
+        `/api/group/${id}`,
+        GROUPS.find((group) => group.id === id))
+    );
   }
 
   addGroup(group: GroupForm): Observable<Group> {
-    return this._http.post<Group>("/api/addGroup", group);
+    return from(this._fakeHttp.send<Group>("GET", "/api/addGroup", group as Group, group));
   }
 
   editGroup(group: Group): Observable<Group> {
-    return this._http.put<Group>("/api/editGroup", group);
+    return from(this._fakeHttp.send<Group>("PUT", "/api/editGroup", group, group));
   }
 
   deleteGroup(id: number): Observable<MessageResponse> {
-    return this._http.delete<MessageResponse>(`api/deleteGroup/${id}`);
+    return from(this._fakeHttp.send<MessageResponse>("DELETE", `api/deleteGroup/${id}`, { message: "Group deleted" }));
   }
 }

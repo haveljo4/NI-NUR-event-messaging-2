@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/messaging-angular'),
+      dir: require('path').join(__dirname, './coverage/event-messaging'),
       subdir: '.',
       reporters: [
         { type: 'html' },

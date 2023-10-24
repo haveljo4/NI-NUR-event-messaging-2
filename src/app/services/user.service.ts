@@ -1,8 +1,7 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 
 import { CredentialsForm } from "../models/forms/credentials-form";
-
+import { FakeHttpService } from "./fake-http.service";
 
 @Injectable({
   providedIn: "root"
@@ -12,31 +11,35 @@ export class UserService {
   isLogged = false;
   username?: string;
 
-  constructor(private _http: HttpClient) {
+  constructor(private _fakeHttp: FakeHttpService) {
     this.check();
   }
 
   async login(credentials: CredentialsForm): Promise<boolean> {
+    // mock credentials
+    credentials.username = "admin";
+    credentials.password = "develop123";
+
     if (credentials.username && credentials.password) {
-      await this._http.post<string>("/api/login", credentials).toPromise();
+      await this._fakeHttp.send<string>("POST", "/api/login", "OK", credentials);
       this.isLogged = true;
       this.username = credentials.username;
-      return Promise.resolve(true);
+      return true;
     } else {
-      return Promise.resolve(false);
+      return false;
     }
   }
 
   async check(): Promise<boolean> {
-    this.isLogged = await this._http.get<boolean>("/api/isLogged").toPromise();
+    this.isLogged = await this._fakeHttp.send<boolean>("GET", "/api/isLogged", true);
     if (this.isLogged) {
-      this.username = await this._http.get<string>("/api/logged").toPromise();
+      this.username = await this._fakeHttp.send<string>("GET", "/api/logged", "admin");
     }
-    return Promise.resolve(true);
+    return true;
   }
 
   async logout(): Promise<boolean> {
-    await this._http.get<string>("/api/logout").toPromise();
+    await this._fakeHttp.send<string>("GET", "/api/logout", "OK");
     this.isLogged = false;
     return Promise.resolve(true);
   }
