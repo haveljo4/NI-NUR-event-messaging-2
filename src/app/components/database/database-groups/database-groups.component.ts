@@ -8,7 +8,7 @@ import { MatDialog } from "@angular/material/dialog";
 
 import { Group } from "src/app/models/group";
 import { GroupsService } from "src/app/services/groups.service";
-import { ConfirmDialogComponent } from "src/app/confirm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "src/app/components/confirm-dialog/confirm-dialog.component";
 import { GroupDialogComponent } from "../group-dialog/group-dialog.component";
 import { FormType } from "src/app/models/enums/form-type";
 import { GroupDialogInject } from "src/app/models/dialog-injects/group-dialog-inject";

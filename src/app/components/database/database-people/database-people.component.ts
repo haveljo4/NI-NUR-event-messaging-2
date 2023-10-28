@@ -9,7 +9,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 import { PeopleService } from "src/app/services/people.service";
-import { ConfirmDialogComponent } from "src/app/confirm-dialog/confirm-dialog.component";
+import { ConfirmDialogComponent } from "src/app/components/confirm-dialog/confirm-dialog.component";
 import { PersonDialogComponent } from "../person-dialog/person-dialog.component";
 import { FormType } from "src/app/models/enums/form-type";
 import { PersonDialogInject } from "src/app/models/dialog-injects/person-dialog-inject";

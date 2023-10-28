@@ -5,19 +5,19 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 
-import { Group } from "../models/group";
-import { Person } from "../models/person";
-import { PersonForm } from "../models/forms/person-form";
-import { GroupsService } from "../services/groups.service";
-import { PeopleService } from "../services/people.service";
+import { Group } from "src/app/models/group";
+import { Person } from "src/app/models/person";
+import { PersonForm } from "src/app/models/forms/person-form";
+import { GroupsService } from "src/app/services/groups.service";
+import { PeopleService } from "src/app/services/people.service";
 import { DatabasePeopleComponent } from "./database-people/database-people.component";
 import { DatabaseGroupsComponent } from "./database-groups/database-groups.component";
 import { PersonDialogComponent } from "./person-dialog/person-dialog.component";
-import { FormType } from "../models/enums/form-type";
-import { TabType } from "../models/enums/tab-type";
-import { PersonDialogInject } from "../models/dialog-injects/person-dialog-inject";
+import { FormType } from "src/app/models/enums/form-type";
+import { TabType } from "src/app/models/enums/tab-type";
+import { PersonDialogInject } from "src/app/models/dialog-injects/person-dialog-inject";
 import { GroupDialogComponent } from "./group-dialog/group-dialog.component";
-import { GroupDialogInject } from "../models/dialog-injects/group-dialog-inject";
+import { GroupDialogInject } from "src/app/models/dialog-injects/group-dialog-inject";
 
 @Component({
   selector: "app-database",

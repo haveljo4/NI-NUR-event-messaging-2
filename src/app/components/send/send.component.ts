@@ -3,9 +3,9 @@ import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
-import { Group } from "../models/group";
-import { GroupsService } from "../services/groups.service";
-import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component";
+import { Group } from "src/app/models/group";
+import { GroupsService } from "src/app/services/groups.service";
+import { ConfirmDialogComponent } from "src/app/components/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: "app-send",

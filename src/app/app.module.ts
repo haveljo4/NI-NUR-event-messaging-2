@@ -24,16 +24,16 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { HomeComponent } from "./home/home.component";
-import { DatabaseComponent } from "./database/database.component";
-import { DatabasePeopleComponent } from "./database/database-people/database-people.component";
-import { DatabaseGroupsComponent } from "./database/database-groups/database-groups.component";
-import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
-import { SendComponent } from "./send/send.component";
-import { ConfirmDialogComponent } from "./confirm-dialog/confirm-dialog.component";
-import { PersonDialogComponent } from "./database/person-dialog/person-dialog.component";
-import { GroupDialogComponent } from "./database/group-dialog/group-dialog.component";
-import { LoginComponent } from "./login/login.component";
+import { HomeComponent } from "./components/home/home.component";
+import { DatabaseComponent } from "./components/database/database.component";
+import { DatabasePeopleComponent } from "./components/database/database-people/database-people.component";
+import { DatabaseGroupsComponent } from "./components/database/database-groups/database-groups.component";
+import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
+import { SendComponent } from "./components/send/send.component";
+import { ConfirmDialogComponent } from "./components/confirm-dialog/confirm-dialog.component";
+import { PersonDialogComponent } from "./components/database/person-dialog/person-dialog.component";
+import { GroupDialogComponent } from "./components/database/group-dialog/group-dialog.component";
+import { LoginComponent } from "./components/login/login.component";
 import { PhoneNumberPipe } from "./pipes/phone-number.pipe";
 
 @NgModule({
