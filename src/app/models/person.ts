@@ -1,10 +1,9 @@
 export interface Person {
   id: number;
-  groupId: number;
+  groupIds: number[];
   firstName: string;
   lastName: string;
   phoneNumber: string;
   email?: string;
-
-  groupName?: string;
+  groupNames?: [string];
 }
