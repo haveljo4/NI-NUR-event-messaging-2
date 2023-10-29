@@ -77,12 +77,9 @@ export class DatabaseComponent implements OnInit {
     });
     dialog.afterClosed().subscribe((person?: PersonForm) => {
       if (person) {
-        this._peopleService.addPerson(person).subscribe((newPerson: Person) => {
-          this.people = this.people.slice(); // cloning because change occurred (===)
-          newPerson.groupName = this.groups.filter((group) => group.id === person.groupId)[0].name;
-          this.people.push(newPerson);
-          this._snackBar.open("Person added!");
-        });
+        this._peopleService.addPerson(person);
+        this.people = this._peopleService.getAllPeople();
+        this._snackBar.open("Person added!");
       }
     });
   }
@@ -95,11 +92,9 @@ export class DatabaseComponent implements OnInit {
     });
     dialog.afterClosed().subscribe((group?: Group) => {
       if (group) {
-        this._groupsService.addGroup(group).subscribe((newGroup: Group) => {
-          this.groups = this.groups.slice(); // cloning because change occurred (===)
-          this.groups.push(newGroup);
-          this._snackBar.open("Group added!");
-        });
+        this._groupsService.addGroup(group);
+        this.groups = this._groupsService.getAllGroups();
+        this._snackBar.open("Group added!");
       }
     });
   }
@@ -121,14 +116,10 @@ export class DatabaseComponent implements OnInit {
   }
 
   private _loadData(): void {
-    this._groupsService.getAllGroups().subscribe((groups) => {
-      this.groups = groups;
-      this._peopleService.getAllPeople().subscribe((people) => {
-        this.people = people.map((person) => {
-          person.groupName = groups.filter((group) => group.id === person.groupId)[0].name;
-          return person;
-        });
-      });
+    this.groups = this._groupsService.getAllGroups();
+    this.people = this._peopleService.getAllPeople().map((person) => {
+      person.groupName = this.groups.filter((group) => group.id === person.groupId)[0].name;
+      return person;
     });
   }
 }

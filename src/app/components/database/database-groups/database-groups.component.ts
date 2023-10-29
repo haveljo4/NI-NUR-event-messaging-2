@@ -74,7 +74,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
   constructor(
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private _groupService: GroupsService
+    private _groupsService: GroupsService
   ) { }
 
   ngOnInit(): void {
@@ -98,10 +98,9 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((confirmed?: boolean) => {
       if (confirmed) {
-        this._groupService.deleteGroup(group.id).subscribe(() => {
-          this._snackBar.open("Group deleted!");
-          this.groups = this.groups.filter((filterGroup) => filterGroup.id !== group.id);
-        });
+        this._groupsService.deleteGroup(group.id);
+        this.groups = this._groupsService.getAllGroups();
+        this._snackBar.open("Group deleted!");
       }
     });
   }
@@ -115,12 +114,9 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((afterCloseGroup?: Group) => {
       if (afterCloseGroup) {
-        this._groupService.editGroup(afterCloseGroup).subscribe((newGroup: Group) => {
-          const index = this.groups.findIndex((findPerson) => findPerson.id === newGroup.id);
-          this.groups[index] = newGroup;
-          this._snackBar.open("Group edited!");
-          this.groups = this.groups.slice();
-        });
+        this._groupsService.editGroup(afterCloseGroup);
+        this.groups = this._groupsService.getAllGroups();
+        this._snackBar.open("Group edited!");
       }
     });
   }

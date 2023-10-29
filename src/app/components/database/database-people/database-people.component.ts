@@ -111,10 +111,9 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((confirmed?: boolean) => {
       if (confirmed) {
-        this._peopleService.deletePerson(person.id).subscribe(() => {
-          this._snackBar.open("Person deleted!");
-          this.people = this.people.filter((filterPerson) => filterPerson.id !== person.id);
-        });
+        this._peopleService.deletePerson(person.id);
+        this.people = this._peopleService.getAllPeople();
+        this._snackBar.open("Person deleted!");
       }
     });
   }
@@ -129,15 +128,9 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((afterClosePerson?: Person) => {
       if (afterClosePerson) {
-        this._peopleService.editPerson(afterClosePerson).subscribe((newPerson: Person) => {
-          const index = this.people.findIndex((findPerson) => findPerson.id === newPerson.id);
-          this.people[index] = newPerson;
-          this.people[index].groupName = this.groups.find((group) => {
-            return group.id === this.people[index].groupId;
-          })?.name;
-          this._snackBar.open("Person edited!");
-          this.people = this.people.slice();
-        });
+        this._peopleService.editPerson(afterClosePerson);
+        this.people = this._peopleService.getAllPeople();
+        this._snackBar.open("Person edited!");
       }
     });
   }
