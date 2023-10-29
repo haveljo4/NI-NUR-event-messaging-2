@@ -20,7 +20,6 @@ import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from "@angular/mater
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatTooltipModule } from "@angular/material/tooltip";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -72,8 +71,7 @@ import { PhoneNumberPipe } from "./pipes/phone-number.pipe";
     MatSnackBarModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTooltipModule,
-    MatSlideToggleModule
+    MatTooltipModule
   ],
   providers: [
     {

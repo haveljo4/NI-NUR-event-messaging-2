@@ -1,6 +1,6 @@
-<mat-form-field class="filter-field" *ngIf="filterIsShowed">
+<mat-form-field class="filter-field">
   <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter()" placeholder="Ex. Igor Novak"
+  <input matInput (keyup)="applyFilter()" placeholder="e.g. John Doe"
          [(ngModel)]="filterInput">
 </mat-form-field>
 

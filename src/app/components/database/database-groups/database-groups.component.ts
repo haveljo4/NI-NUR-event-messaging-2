@@ -29,47 +29,12 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     return this._groups;
   }
   displayedColumns: string[] = [
-    "name"
+    "name", "editButton", "deleteButton"
   ];
-  private readonly _specialColumns = {
-    editButton: "editButton",
-    deleteButton: "deleteButton"
-  };
   filterInput = "";
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource: MatTableDataSource<Group> = new MatTableDataSource(this._groups);
-  @Input() filterIsShowed!: boolean;
-  _deleteIsShowed = false;
-  @Input() set deleteIsShowed(value: boolean) {
-    this._deleteIsShowed = value;
-    if (this._deleteIsShowed) {
-      this.displayedColumns.push(this._specialColumns.deleteButton);
-    } else {
-      this.displayedColumns = this.displayedColumns
-        .filter((column) => column !== this._specialColumns.deleteButton);
-    }
-  }
-  get deleteIsShowed(): boolean {
-    return this._deleteIsShowed;
-  }
-  _editIsShowed = false;
-  @Input() set editIsShowed(value: boolean) {
-    this._editIsShowed = value;
-    if (this._editIsShowed) {
-      if (this.displayedColumns.length === 2) {
-        this.displayedColumns.splice(1, 0, this._specialColumns.editButton);
-      } else {
-        this.displayedColumns.push(this._specialColumns.editButton);
-      }
-    } else {
-      this.displayedColumns = this.displayedColumns
-        .filter((column) => column !== this._specialColumns.editButton);
-    }
-  }
-  get editIsShowed(): boolean {
-    return this._editIsShowed;
-  }
 
   constructor(
     private _dialog: MatDialog,

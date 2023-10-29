@@ -7,47 +7,16 @@
           <mat-icon>add</mat-icon>
         </button>
       </div>
-      <div>
-        <table border="0">
-          <tr>
-            <td>
-              <mat-slide-toggle [(ngModel)]="filterIsShowed" (change)="onFilterIsShowedChange($event)"
-                                color="primary">
-                Show filter
-              </mat-slide-toggle>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <mat-slide-toggle [(ngModel)]="editIsShowed">
-                Show edit
-              </mat-slide-toggle>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <mat-slide-toggle [(ngModel)]="deleteIsShowed" color="warn">
-                Show delete
-              </mat-slide-toggle>
-            </td>
-          </tr>
-        </table>
-      </div>
     </div>
   </mat-drawer>
 
   <mat-drawer-content>
     <mat-tab-group mat-align-tabs="center" (selectedTabChange)="onSelectedTabChanged($event)">
       <mat-tab label="People" routerLink="database/people">
-        <app-database-people [people]="people" [groups]="groups" [filterIsShowed]="filterIsShowed"
-                             [deleteIsShowed]="deleteIsShowed" [editIsShowed]="editIsShowed">
-        </app-database-people>
+        <app-database-people [people]="people" [groups]="groups"></app-database-people>
       </mat-tab>
       <mat-tab label="Groups" routerLink="database/groups">
-        <app-database-groups [groups]="groups" [filterIsShowed]="filterIsShowed"
-                             [deleteIsShowed]="deleteIsShowed" [editIsShowed]="editIsShowed">
-
-        </app-database-groups>
+        <app-database-groups [groups]="groups"></app-database-groups>
       </mat-tab>
     </mat-tab-group>
   </mat-drawer-content>

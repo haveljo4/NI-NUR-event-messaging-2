@@ -29,11 +29,8 @@ export class DatabaseComponent implements OnInit {
   groups: Group[] = [];
   people: Person[] = [];
   selectedTab: TabType = TabType.PEOPLE;
-  filterIsShowed = false;
   @ViewChild(DatabasePeopleComponent) databasePeopleComponent!: DatabasePeopleComponent;
   @ViewChild(DatabaseGroupsComponent) databaseGroupsComponent!: DatabaseGroupsComponent;
-  deleteIsShowed = false;
-  editIsShowed = false;
 
   constructor(
     private _groupsService: GroupsService,
@@ -106,13 +103,6 @@ export class DatabaseComponent implements OnInit {
       case TabType.GROUPS:
         return "Add new group";
     }
-  }
-
-  onFilterIsShowedChange(event: MatSlideToggleChange): void {
-    this.databasePeopleComponent.filterInput = "";
-    this.databasePeopleComponent.applyFilter();
-    this.databaseGroupsComponent.filterInput = "";
-    this.databaseGroupsComponent.applyFilter();
   }
 
   private _loadData(): void {

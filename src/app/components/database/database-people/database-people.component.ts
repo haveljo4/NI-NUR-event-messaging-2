@@ -40,47 +40,14 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     "firstName",
     "lastName",
     "phoneNumber",
-    "group"
+    "group",
+    "editButton",
+    "deleteButton"
   ];
-  private readonly _specialColumns = {
-    editButton: "editButton",
-    deleteButton: "deleteButton"
-  };
   filterInput = "";
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource: MatTableDataSource<Person> = new MatTableDataSource(this._people);
-  @Input() filterIsShowed!: boolean;
-  private _deleteIsShowed = false;
-  @Input() set deleteIsShowed(value: boolean) {
-    this._deleteIsShowed = value;
-    if (this._deleteIsShowed) {
-      this.displayedColumns.push(this._specialColumns.deleteButton);
-    } else {
-      this.displayedColumns = this.displayedColumns
-        .filter((column) => column !== this._specialColumns.deleteButton);
-    }
-  }
-  get deleteIsShowed(): boolean {
-    return this._deleteIsShowed;
-  }
-  private _editIsShowed = false;
-  @Input() set editIsShowed(value: boolean) {
-    this._editIsShowed = value;
-    if (this._editIsShowed) {
-      if (this.displayedColumns.length === 5) {
-        this.displayedColumns.splice(4, 0, this._specialColumns.editButton);
-      } else {
-        this.displayedColumns.push(this._specialColumns.editButton);
-      }
-    } else {
-      this.displayedColumns = this.displayedColumns
-        .filter((column) => column !== this._specialColumns.editButton);
-    }
-  }
-  get editIsShowed(): boolean {
-    return this._editIsShowed;
-  }
   pageSizeOptions = [5, 10, 25, 100];
   pageSize = this.pageSizeOptions[1];
 
