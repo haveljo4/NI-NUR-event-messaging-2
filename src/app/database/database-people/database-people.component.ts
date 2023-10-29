@@ -13,6 +13,7 @@ import { ConfirmDialogComponent } from "src/app/confirm-dialog/confirm-dialog.co
 import { PersonDialogComponent } from "../person-dialog/person-dialog.component";
 import { FormType } from "src/app/models/enums/form-type";
 import { PersonDialogInject } from "src/app/models/dialog-injects/person-dialog-inject";
+import {DataStoreService} from "../../services/data-store.service";
 
 @Component({
   selector: "app-database-people",
@@ -23,7 +24,7 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
 
   private _people: Person[] = [];
   @Input() set people(value: Person[]) {
-    this._people = value;
+    this._people = this._dataStoreService.getAllPeople();
     this.dataSource.data = this._people;
   }
   get people(): Person[] {
@@ -87,7 +88,8 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
   constructor(
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private _peopleService: PeopleService
+    private _peopleService: PeopleService,
+    private _dataStoreService: DataStoreService
   ) { }
 
   ngOnInit(): void {
@@ -111,10 +113,11 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((confirmed?: boolean) => {
       if (confirmed) {
-        this._peopleService.deletePerson(person.id).subscribe(() => {
+        this._dataStoreService.removePerson(person.id);
+        // this._peopleService.deletePerson(person.id).subscribe(() => {
           this._snackBar.open("Person deleted!");
           this.people = this.people.filter((filterPerson) => filterPerson.id !== person.id);
-        });
+        // });
       }
     });
   }
@@ -129,15 +132,8 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((afterClosePerson?: Person) => {
       if (afterClosePerson) {
-        this._peopleService.editPerson(afterClosePerson).subscribe((newPerson: Person) => {
-          const index = this.people.findIndex((findPerson) => findPerson.id === newPerson.id);
-          this.people[index] = newPerson;
-          this.people[index].groupName = this.groups.find((group) => {
-            return group.id === this.people[index].groupId;
-          })?.name;
-          this._snackBar.open("Person edited!");
-          this.people = this.people.slice();
-        });
+        this._dataStoreService.editPerson(afterClosePerson);
+        this._snackBar.open("Person edited!");
       }
     });
   }

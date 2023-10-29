@@ -1,6 +1,6 @@
-import {Event} from "../models/event";
+import {WorkEvent} from "../models/workEvent";
 
-const events: Event[] = [{"id": 1, "name": "Marketing Strategy Brainstorm", "status": "Canceled", "description": "Inspection of Left Elbow Region, Open Approach", "participantGroupIds": [67, 62, 97, 72], "dateTime": "7/3/2023"},
+const events: WorkEvent[] = [{"id": 1, "name": "Marketing Strategy Brainstorm", "status": "Canceled", "description": "Inspection of Left Elbow Region, Open Approach", "participantGroupIds": [67, 62, 97, 72], "dateTime": "7/3/2023"},
     {"id": 2, "name": "Sales Pitch Competition", "status": "Canceled", "description": "Reposition Right Diaphragm, Open Approach", "participantGroupIds": [23, 96], "dateTime": "6/15/2023"},
     {"id": 3, "name": "Virtual Panel Discussion", "status": "Scheduled", "description": "Drainage of Left Testis with Drainage Device, Percutaneous Endoscopic Approach", "participantGroupIds": [12], "dateTime": "12/15/2022"},
     {"id": 4, "name": "Virtual Sales Training", "status": "Canceled", "description": "Supplement Right Subclavian Vein with Autologous Tissue Substitute, Open Approach", "participantGroupIds": [11, 4], "dateTime": "5/25/2023"},

@@ -18,6 +18,9 @@ import { TabType } from "../models/enums/tab-type";
 import { PersonDialogInject } from "../models/dialog-injects/person-dialog-inject";
 import { GroupDialogComponent } from "./group-dialog/group-dialog.component";
 import { GroupDialogInject } from "../models/dialog-injects/group-dialog-inject";
+import {DataStoreService} from "../services/data-store.service";
+import {Message} from "../models/message";
+import {WorkEvent} from "../models/workEvent";
 
 @Component({
   selector: "app-database",
@@ -28,6 +31,8 @@ export class DatabaseComponent implements OnInit {
 
   groups: Group[] = [];
   people: Person[] = [];
+  events: WorkEvent[] = [];
+  messages: Message[] = [];
   selectedTab: TabType = TabType.PEOPLE;
   filterIsShowed = false;
   @ViewChild(DatabasePeopleComponent) databasePeopleComponent!: DatabasePeopleComponent;
@@ -36,8 +41,9 @@ export class DatabaseComponent implements OnInit {
   editIsShowed = false;
 
   constructor(
-    private _groupsService: GroupsService,
-    private _peopleService: PeopleService,
+    // private _groupsService: GroupsService,
+    // private _peopleService: PeopleService,
+    private _dataStoreService: DataStoreService,
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar
   ) { }
@@ -77,12 +83,13 @@ export class DatabaseComponent implements OnInit {
     });
     dialog.afterClosed().subscribe((person?: PersonForm) => {
       if (person) {
-        this._peopleService.addPerson(person).subscribe((newPerson: Person) => {
-          this.people = this.people.slice(); // cloning because change occurred (===)
-          newPerson.groupName = this.groups.filter((group) => group.id === person.groupId)[0].name;
-          this.people.push(newPerson);
+        // this._dataStoreService.addPerson(<Person>person );
+        // this._peopleService.addPerson(person).subscribe((newPerson: Person) => {
+        //   this.people = this.people.slice(); // cloning because change occurred (===)
+        //   newPerson.groupName = this.groups.filter((group) => group.id === person.groupId)[0].name;
+        //   this.people.push(newPerson);
           this._snackBar.open("Person added!");
-        });
+        // });
       }
     });
   }
@@ -95,11 +102,12 @@ export class DatabaseComponent implements OnInit {
     });
     dialog.afterClosed().subscribe((group?: Group) => {
       if (group) {
-        this._groupsService.addGroup(group).subscribe((newGroup: Group) => {
-          this.groups = this.groups.slice(); // cloning because change occurred (===)
-          this.groups.push(newGroup);
-          this._snackBar.open("Group added!");
-        });
+        this._dataStoreService.addGroup(group);
+        this.groups = this._dataStoreService.getAllGroups();
+        // nechapu proc, tam je to slice, ale funguje to
+        this.groups = this.groups.slice()
+        // this.groups.push(group)
+        this._snackBar.open("Group added!");
       }
     });
   }
@@ -121,14 +129,9 @@ export class DatabaseComponent implements OnInit {
   }
 
   private _loadData(): void {
-    this._groupsService.getAllGroups().subscribe((groups) => {
-      this.groups = groups;
-      this._peopleService.getAllPeople().subscribe((people) => {
-        this.people = people.map((person) => {
-          person.groupName = groups.filter((group) => group.id === person.groupId)[0].name;
-          return person;
-        });
-      });
-    });
+    this.groups = this._dataStoreService.getAllGroups()
+    this.people = this._dataStoreService.getAllPeople()
+    this.events = this._dataStoreService.getAllEvents()
+    this.messages = this._dataStoreService.getAllMessages()
   }
 }

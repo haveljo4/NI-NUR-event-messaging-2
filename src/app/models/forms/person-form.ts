@@ -1,6 +1,6 @@
 export interface PersonForm {
   id?: number;
-  groupId?: number;
+  groupIds?: number[];
   firstName?: string;
   lastName?: string;
   phoneNumber?: string;

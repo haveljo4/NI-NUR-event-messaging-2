@@ -1,4 +1,4 @@
-export interface Event {
+export interface WorkEvent {
   id: number;
   name: string;
   status: string;
