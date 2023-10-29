@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatTabChangeEvent } from "@angular/material/tabs";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 
 import { Group } from "src/app/models/group";
 import { Person } from "src/app/models/person";
