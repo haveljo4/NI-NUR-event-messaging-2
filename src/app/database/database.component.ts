@@ -83,7 +83,8 @@ export class DatabaseComponent implements OnInit {
     });
     dialog.afterClosed().subscribe((person?: PersonForm) => {
       if (person) {
-        // this._dataStoreService.addPerson(<Person>person );
+        this._dataStoreService.addPerson(<Person>person );
+        this.people = this.people.slice();
         // this._peopleService.addPerson(person).subscribe((newPerson: Person) => {
         //   this.people = this.people.slice(); // cloning because change occurred (===)
         //   newPerson.groupName = this.groups.filter((group) => group.id === person.groupId)[0].name;
@@ -106,7 +107,6 @@ export class DatabaseComponent implements OnInit {
         this.groups = this._dataStoreService.getAllGroups();
         // nechapu proc, tam je to slice, ale funguje to
         this.groups = this.groups.slice()
-        // this.groups.push(group)
         this._snackBar.open("Group added!");
       }
     });

@@ -116,8 +116,7 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
         this._dataStoreService.removePerson(person.id);
         // this._peopleService.deletePerson(person.id).subscribe(() => {
           this._snackBar.open("Person deleted!");
-          this.people = this.people.filter((filterPerson) => filterPerson.id !== person.id);
-        // });
+          this.people = this.people.slice();
       }
     });
   }
@@ -133,6 +132,7 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     dialog.afterClosed().subscribe((afterClosePerson?: Person) => {
       if (afterClosePerson) {
         this._dataStoreService.editPerson(afterClosePerson);
+        this.people = this.people.slice();
         this._snackBar.open("Person edited!");
       }
     });

@@ -12,6 +12,7 @@ import { ConfirmDialogComponent } from "src/app/confirm-dialog/confirm-dialog.co
 import { GroupDialogComponent } from "../group-dialog/group-dialog.component";
 import { FormType } from "src/app/models/enums/form-type";
 import { GroupDialogInject } from "src/app/models/dialog-injects/group-dialog-inject";
+import {DataStoreService} from "../../services/data-store.service";
 
 @Component({
   selector: "app-database-groups",
@@ -22,7 +23,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
 
   private _groups: Group[] = [];
   @Input() set groups(value: Group[]) {
-    this._groups = value;
+    this._groups = this._dataStoreService.getAllGroups();
     this.dataSource.data = this._groups;
   }
   get groups(): Group[] {
@@ -74,7 +75,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
   constructor(
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private _groupService: GroupsService
+    private _dataStoreService : DataStoreService
   ) { }
 
   ngOnInit(): void {
@@ -98,10 +99,9 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((confirmed?: boolean) => {
       if (confirmed) {
-        this._groupService.deleteGroup(group.id).subscribe(() => {
-          this._snackBar.open("Group deleted!");
-          this.groups = this.groups.filter((filterGroup) => filterGroup.id !== group.id);
-        });
+        this._dataStoreService.removeGroup(group.id)
+        this.groups = this.groups.slice();
+        this._snackBar.open("Group deleted!");
       }
     });
   }
@@ -115,12 +115,10 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((afterCloseGroup?: Group) => {
       if (afterCloseGroup) {
-        this._groupService.editGroup(afterCloseGroup).subscribe((newGroup: Group) => {
-          const index = this.groups.findIndex((findPerson) => findPerson.id === newGroup.id);
-          this.groups[index] = newGroup;
-          this._snackBar.open("Group edited!");
+         // TODO tohle jeste nefunguje
+          this._dataStoreService.editGroup(group)
           this.groups = this.groups.slice();
-        });
+          this._snackBar.open("Group edited!");
       }
     });
   }
