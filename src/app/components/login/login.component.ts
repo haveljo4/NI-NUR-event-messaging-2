@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 
 import { MatSnackBar } from "@angular/material/snack-bar";
 
-import { CredentialsForm } from "../models/forms/credentials-form";
-import { UserService } from "../services/user.service";
+import { CredentialsForm } from "src/app/models/forms/credentials-form";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
   selector: "app-login",

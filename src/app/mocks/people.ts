@@ -38,7 +38,7 @@ export const PEOPLE: Person[] = [
     groupName: "Team Beta"
   },
   {
-    id: 4,
+    id: 5,
     firstName: "Angela",
     lastName: "Moss",
     email: "angela.moss@example.com",

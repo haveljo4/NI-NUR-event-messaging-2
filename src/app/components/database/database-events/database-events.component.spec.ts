@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DatabaseComponent } from "./database.component";
+import { DatabaseEventsComponent } from "./database-events.component";
 
-describe("DatabaseComponent", () => {
-  let component: DatabaseComponent;
-  let fixture: ComponentFixture<DatabaseComponent>;
+describe("DatabaseEventsComponent", () => {
+  let component: DatabaseEventsComponent;
+  let fixture: ComponentFixture<DatabaseEventsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DatabaseComponent ]
+      declarations: [ DatabaseEventsComponent ]
     })
     .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DatabaseComponent);
+    fixture = TestBed.createComponent(DatabaseEventsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

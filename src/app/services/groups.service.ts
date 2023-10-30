@@ -1,11 +1,7 @@
 import { Injectable } from "@angular/core";
 
-import { Observable, from } from "rxjs";
-
 import { Group } from "../models/group";
 import { GroupForm } from "../models/forms/group-form";
-import { MessageResponse } from "../models/responses/message-response";
-import { FakeHttpService } from "./fake-http.service";
 
 import { GROUPS } from "../mocks/groups";
 
@@ -14,30 +10,36 @@ import { GROUPS } from "../mocks/groups";
 })
 export class GroupsService {
 
-  constructor(private _fakeHttp: FakeHttpService) { }
+  private _groups: Group[] = GROUPS;
+  private _maxId = Math.max(...GROUPS.map((group) => group.id), 0);
 
-  getAllGroups(): Observable<Group[]> {
-    return from(this._fakeHttp.send<Group[]>("GET", "/api/allGroups", GROUPS));
+  constructor() { }
+
+  private _findIndex(groupId: number): number {
+     return this._groups.findIndex((group) => group.id === groupId);
   }
 
-  getGroup(id: number): Observable<Group | undefined> {
-    return from(
-      this._fakeHttp.send<Group | undefined>(
-        "GET",
-        `/api/group/${id}`,
-        GROUPS.find((group) => group.id === id))
-    );
+  getAllGroups(): Group[] {
+    return this._groups.slice();
   }
 
-  addGroup(group: GroupForm): Observable<Group> {
-    return from(this._fakeHttp.send<Group>("GET", "/api/addGroup", group as Group, group));
+  getGroup(id: number): Group | undefined {
+    return this._groups.find((group) => group.id === id);
   }
 
-  editGroup(group: Group): Observable<Group> {
-    return from(this._fakeHttp.send<Group>("PUT", "/api/editGroup", group, group));
+  addGroup(group: GroupForm): void {
+    if (!group.name) {
+      throw new Error("Missing name in group");
+    }
+
+    this._groups.push({ id: ++this._maxId, name: group.name });
   }
 
-  deleteGroup(id: number): Observable<MessageResponse> {
-    return from(this._fakeHttp.send<MessageResponse>("DELETE", `api/deleteGroup/${id}`, { message: "Group deleted" }));
+  editGroup(group: Group): void {
+    this._groups[this._findIndex(group.id)] = group;
+  }
+
+  deleteGroup(id: number): void {
+    this._groups = this._groups.filter((group) => group.id !== id);
   }
 }

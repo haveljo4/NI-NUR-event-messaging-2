@@ -1,54 +1,58 @@
 import { Injectable } from "@angular/core";
 
-import { Observable, from } from "rxjs";
-
 import { Person } from "../models/person";
 import { PersonForm } from "../models/forms/person-form";
-import { MessageResponse } from "../models/responses/message-response";
-import { FakeHttpService } from "./fake-http.service";
+import { GroupsService } from "./groups.service";
 
 import { PEOPLE } from "../mocks/people";
-import { GROUPS } from "../mocks/groups";
 
 @Injectable({
   providedIn: "root"
 })
 export class PeopleService {
 
-  constructor(private _fakeHttp: FakeHttpService) { }
+  private _people: Person[] = PEOPLE;
+  private _maxId = Math.max(...PEOPLE.map((group) => group.id), 0);
 
-  getAllPeople(): Observable<Person[]> {
-    return from(this._fakeHttp.send<Person[]>("GET", "/api/allPeople", PEOPLE));
+  constructor(private _groupsService: GroupsService) { }
+
+  private _findIndex(personId: number): number {
+    return this._people.findIndex((group) => group.id === personId);
   }
 
-  getPerson(id: number): Observable<Person | undefined> {
-    return from(
-      this._fakeHttp.send<Person | undefined>(
-        "GET",
-        `/api/person/${id}`,
-        PEOPLE.find((person) => person.id === id)
-      )
-    );
+  getAllPeople(): Person[] {
+    return this._people.slice();
   }
 
-  addPerson(person: PersonForm): Observable<Person> {
-    return from(
-      this._fakeHttp.send<Person>(
-        "POST",
-        "/api/addPerson",
-        { ...person, groupName: GROUPS.find((group) => group.id === person.id) } as Person,
-        person
-      )
-    );
+  getPerson(id: number): Person | undefined {
+    return this._people.find((person) => person.id === id);
   }
 
-  editPerson(person: Person): Observable<Person> {
-    return from(this._fakeHttp.send<Person>("PUT", "/api/editPerson", person, person));
+  addPerson(person: PersonForm): void {
+    if (!person.groupId || !person.firstName || !person.lastName || !person.phoneNumber) {
+      throw new Error("Person's required properties are undefined");
+    }
+    const group = this._groupsService.getGroup(person.groupId);
+    if (!group) {
+      throw new Error("GroupId does not");
+    }
+
+    this._people.push({
+      id: ++this._maxId,
+      groupId: person.groupId,
+      firstName: person.firstName,
+      lastName: person.lastName,
+      phoneNumber: person.phoneNumber,
+      email: person.email,
+      groupName: group.name,
+    });
   }
 
-  deletePerson(id: number): Observable<MessageResponse> {
-    return from(
-      this._fakeHttp.send<MessageResponse>("DELETE", `api/deletePerson/${id}`, { message: "Person deleted" })
-    );
+  editPerson(person: Person): void {
+    this._people[this._findIndex(person.id)] = person;
+  }
+
+  deletePerson(id: number): void {
+    this._people = this._people.filter((person) => person.id !== id);
   }
 }
