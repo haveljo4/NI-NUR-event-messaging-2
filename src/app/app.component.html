@@ -2,10 +2,12 @@
 
   <ng-container *ngIf="userService.isLogged">
     <a mat-raised-button routerLink="home" class="home">
-      <img src="assets/img/organizer2000_logo.png" alt="Samanet" class="logo-img">
+      <img src="assets/img/organizer2000_logo.png" alt="Organizer 2000" class="logo-img">
     </a>
-    <a mat-button routerLink="database">Database</a>
-    <a mat-button routerLink="send">Send</a>
+    <a mat-button routerLink="people">People</a>
+    <a mat-button routerLink="groups">Groups</a>
+    <a mat-button routerLink="events">Events</a>
+    <a mat-button routerLink="messages">Messages</a>
     <span class="spacer"></span>
     <a mat-button class="username">{{userService.username}}</a>
     <a mat-button (click)="logout()">Logout</a>
@@ -13,7 +15,7 @@
 
   <ng-container *ngIf="!userService.isLogged">
     <a mat-raised-button>
-      <img src="assets/img/organizer2000_logo.png" alt="Samanet" class="logo-img">
+      <img src="assets/img/organizer2000_logo.png" alt="Organizer 2000" class="logo-img">
     </a>
   </ng-container>
 

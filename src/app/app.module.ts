@@ -24,7 +24,6 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./components/home/home.component";
-import { DatabaseComponent } from "./components/database/database.component";
 import { DatabasePeopleComponent } from "./components/database/database-people/database-people.component";
 import { DatabaseGroupsComponent } from "./components/database/database-groups/database-groups.component";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
@@ -34,12 +33,12 @@ import { PersonDialogComponent } from "./components/database/person-dialog/perso
 import { GroupDialogComponent } from "./components/database/group-dialog/group-dialog.component";
 import { LoginComponent } from "./components/login/login.component";
 import { PhoneNumberPipe } from "./pipes/phone-number.pipe";
+import { DatabaseEventsComponent } from "./components/database/database-events/database-events.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    DatabaseComponent,
     DatabasePeopleComponent,
     DatabaseGroupsComponent,
     PageNotFoundComponent,
@@ -48,7 +47,8 @@ import { PhoneNumberPipe } from "./pipes/phone-number.pipe";
     PersonDialogComponent,
     GroupDialogComponent,
     LoginComponent,
-    PhoneNumberPipe
+    PhoneNumberPipe,
+    DatabaseEventsComponent,
   ],
   imports: [
     BrowserModule,

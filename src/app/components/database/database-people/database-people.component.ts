@@ -13,6 +13,8 @@ import { ConfirmDialogComponent } from "src/app/components/confirm-dialog/confir
 import { PersonDialogComponent } from "../person-dialog/person-dialog.component";
 import { FormType } from "src/app/models/enums/form-type";
 import { PersonDialogInject } from "src/app/models/dialog-injects/person-dialog-inject";
+import { PersonForm } from "src/app/models/forms/person-form";
+import { GroupsService } from "src/app/services/groups.service";
 
 @Component({
   selector: "app-database-people",
@@ -22,7 +24,7 @@ import { PersonDialogInject } from "src/app/models/dialog-injects/person-dialog-
 export class DatabasePeopleComponent implements OnInit, AfterViewInit {
 
   private _people: Person[] = [];
-  @Input() set people(value: Person[]) {
+  set people(value: Person[]) {
     this._people = value;
     this.dataSource.data = this._people;
   }
@@ -30,7 +32,7 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     return this._people;
   }
   private _groups: Group[] = [];
-  @Input() set groups(value: Group[]) {
+  set groups(value: Group[]) {
     this._groups = value;
   }
   get groups(): Group[] {
@@ -54,10 +56,12 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
   constructor(
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private _peopleService: PeopleService
+    private _peopleService: PeopleService,
+    private _groupsService: GroupsService
   ) { }
 
   ngOnInit(): void {
+    this._loadData();
   }
 
   ngAfterViewInit(): void {
@@ -70,6 +74,22 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  showAddDialog(): void {
+    const dialog = this._dialog.open(PersonDialogComponent, {
+      data: {
+        groups: this.groups,
+        type: FormType.ADD
+      } as PersonDialogInject
+    });
+    dialog.afterClosed().subscribe((person?: PersonForm) => {
+      if (person) {
+        this._peopleService.addPerson(person);
+        this.people = this._peopleService.getAllPeople();
+        this._snackBar.open("Person added!");
+      }
+    });
   }
 
   showDeleteDialog(person: Person): void {
@@ -99,6 +119,14 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
         this.people = this._peopleService.getAllPeople();
         this._snackBar.open("Person edited!");
       }
+    });
+  }
+
+  private _loadData(): void {
+    this.groups = this._groupsService.getAllGroups();
+    this.people = this._peopleService.getAllPeople().map((person) => {
+      person.groupName = this.groups.filter((group) => group.id === person.groupId)[0].name;
+      return person;
     });
   }
 }

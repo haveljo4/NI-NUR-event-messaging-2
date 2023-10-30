@@ -21,7 +21,7 @@ import { GroupDialogInject } from "src/app/models/dialog-injects/group-dialog-in
 export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
 
   private _groups: Group[] = [];
-  @Input() set groups(value: Group[]) {
+  set groups(value: Group[]) {
     this._groups = value;
     this.dataSource.data = this._groups;
   }
@@ -43,6 +43,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    this._loadData();
   }
 
   ngAfterViewInit(): void {
@@ -55,6 +56,21 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  showAddDialog(): void {
+    const dialog = this._dialog.open(GroupDialogComponent, {
+      data: {
+        type: FormType.ADD
+      } as GroupDialogInject
+    });
+    dialog.afterClosed().subscribe((group?: Group) => {
+      if (group) {
+        this._groupsService.addGroup(group);
+        this.groups = this._groupsService.getAllGroups();
+        this._snackBar.open("Group added!");
+      }
+    });
   }
 
   showDeleteDialog(group: Group): void {
@@ -84,5 +100,9 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
         this._snackBar.open("Group edited!");
       }
     });
+  }
+
+  private _loadData(): void {
+    this.groups = this._groupsService.getAllGroups();
   }
 }
