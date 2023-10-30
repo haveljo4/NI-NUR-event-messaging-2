@@ -1,17 +1,16 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
 
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { MatDialog } from "@angular/material/dialog";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatSort} from "@angular/material/sort";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatDialog} from "@angular/material/dialog";
 
-import { Group } from "src/app/models/group";
-import { GroupsService } from "src/app/services/groups.service";
-import { ConfirmDialogComponent } from "src/app/components/confirm-dialog/confirm-dialog.component";
-import { GroupDialogComponent } from "../group-dialog/group-dialog.component";
-import { FormType } from "src/app/models/enums/form-type";
-import { GroupDialogInject } from "src/app/models/dialog-injects/group-dialog-inject";
+import {Group} from "src/app/models/group";
+import {GroupsService} from "src/app/services/groups.service";
+import {GroupDialogComponent} from "../group-dialog/group-dialog.component";
+import {FormType} from "src/app/models/enums/form-type";
+import {GroupDialogInject} from "src/app/models/dialog-injects/group-dialog-inject";
 
 @Component({
   selector: "app-database-groups",
@@ -73,17 +72,10 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  showDeleteDialog(group: Group): void {
-    const dialog = this._dialog.open(ConfirmDialogComponent, {
-      data: `Are you sure you want to delete group ${group.name}?`
-    });
-    dialog.afterClosed().subscribe((confirmed?: boolean) => {
-      if (confirmed) {
-        this._groupsService.deleteGroup(group.id);
-        this.groups = this._groupsService.getAllGroups();
-        this._snackBar.open("Group deleted!");
-      }
-    });
+  deleteGroup(group: Group): void {
+      this._groupsService.deleteGroup(group.id);
+      this.groups = this._groupsService.getAllGroups();
+      this._snackBar.open("Group deleted!"); // TODO undo
   }
 
   showEditGroupDialog(group: Group): void {

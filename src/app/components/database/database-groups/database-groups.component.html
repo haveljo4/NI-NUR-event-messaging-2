@@ -13,7 +13,7 @@
   <mat-drawer-content>
     <mat-form-field class="filter-field">
       <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter()" placeholder="e.g. John Doe"
+      <input matInput (keyup)="applyFilter()" placeholder="e.g. Team Alpha"
              [(ngModel)]="filterInput">
     </mat-form-field>
 
@@ -35,7 +35,7 @@
         <ng-container matColumnDef="deleteButton">
           <th mat-header-cell *matHeaderCellDef>Delete</th>
           <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="warn" (click)="showDeleteDialog(element)">
+            <button mat-icon-button color="warn" (click)="deleteGroup(element)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
