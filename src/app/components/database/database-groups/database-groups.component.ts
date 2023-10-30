@@ -28,7 +28,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     return this._groups;
   }
   displayedColumns: string[] = [
-    "name", "editButton", "deleteButton"
+    "name", "messageButton", "editButton", "deleteButton"
   ];
   filterInput = "";
   @ViewChild(MatSort) sort!: MatSort;
@@ -76,6 +76,10 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
       this._groupsService.deleteGroup(group.id);
       this.groups = this._groupsService.getAllGroups();
       this._snackBar.open("Group deleted!"); // TODO undo
+  }
+
+  showMessageGroupDialog(group: Group): void {
+    this._snackBar.open("Not implemented"); // TODO
   }
 
   showEditGroupDialog(group: Group): void {

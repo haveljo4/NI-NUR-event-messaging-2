@@ -24,10 +24,19 @@
           <td mat-cell *matCellDef="let element">{{element.name}}</td>
         </ng-container>
 
+        <ng-container matColumnDef="messageButton">
+          <th mat-header-cell *matHeaderCellDef>Message</th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="black" (click)="showMessageGroupDialog(element)">
+              <mat-icon>message</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="editButton">
           <th mat-header-cell *matHeaderCellDef>Edit</th>
           <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="accent" (click)="showEditGroupDialog(element)">
+            <button mat-icon-button color="black" (click)="showEditGroupDialog(element)">
               <mat-icon>edit</mat-icon>
             </button>
           </td>
