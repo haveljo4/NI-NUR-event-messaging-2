@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DatabaseEventsComponent } from './database-events.component';
+import { DatabaseEventsComponent } from "./database-events.component";
 
-describe('DatabaseEventsComponent', () => {
+describe("DatabaseEventsComponent", () => {
   let component: DatabaseEventsComponent;
   let fixture: ComponentFixture<DatabaseEventsComponent>;
 
@@ -17,7 +17,7 @@ describe('DatabaseEventsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
