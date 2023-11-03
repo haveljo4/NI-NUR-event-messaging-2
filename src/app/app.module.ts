@@ -34,6 +34,9 @@ import { GroupDialogComponent } from "./components/database/group-dialog/group-d
 import { LoginComponent } from "./components/login/login.component";
 import { PhoneNumberPipe } from "./pipes/phone-number.pipe";
 import { DatabaseEventsComponent } from "./components/database/database-events/database-events.component";
+import { GroupMessageDialogComponent } from './components/message-dialogs/group-message-dialog/group-message-dialog.component';
+import { EventMessageDialogComponent } from './components/message-dialogs/event-message-dialog/event-message-dialog.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -49,6 +52,8 @@ import { DatabaseEventsComponent } from "./components/database/database-events/d
     LoginComponent,
     PhoneNumberPipe,
     DatabaseEventsComponent,
+    GroupMessageDialogComponent,
+    EventMessageDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +76,8 @@ import { DatabaseEventsComponent } from "./components/database/database-events/d
     MatSnackBarModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCheckboxModule
   ],
   providers: [
     {

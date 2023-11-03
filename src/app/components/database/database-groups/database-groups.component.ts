@@ -11,6 +11,7 @@ import {GroupsService} from "src/app/services/groups.service";
 import {GroupDialogComponent} from "../group-dialog/group-dialog.component";
 import {FormType} from "src/app/models/enums/form-type";
 import {GroupDialogInject} from "src/app/models/dialog-injects/group-dialog-inject";
+import {GroupMessageDialogComponent} from "../../message-dialogs/group-message-dialog/group-message-dialog.component";
 
 @Component({
   selector: "app-database-groups",
@@ -79,7 +80,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
   }
 
   showMessageGroupDialog(group: Group): void {
-    this._snackBar.open("Not implemented"); // TODO
+    this._dialog.open(GroupMessageDialogComponent, {data: {groups: group}})
   }
 
   showEditGroupDialog(group: Group): void {

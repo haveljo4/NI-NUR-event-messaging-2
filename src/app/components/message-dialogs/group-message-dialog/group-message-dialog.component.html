@@ -1,0 +1,35 @@
+<div class="form">
+  <div class="flex-row">
+    <h1 style="margin: 0">Send Group Message</h1>
+    <button mat-button [mat-dialog-close]=null>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="mat-typography">
+
+  <!-- TODO: Group Picker -->
+
+    <div class="flex-row">
+        <mat-checkbox class="mat-checkbox">E-Mail</mat-checkbox>
+        <mat-checkbox>SMS</mat-checkbox>
+        <mat-checkbox>WhatsApp</mat-checkbox>
+        <mat-checkbox>Slack</mat-checkbox>
+    </div>
+
+    <mat-form-field appearance="fill" class="wide-field">
+      <mat-label>Subject</mat-label>
+      <input matInput [(ngModel)]="subject">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="wide-field">
+      <mat-label>Message</mat-label>
+      <textarea [rows]="10" matInput [(ngModel)]="message"></textarea>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+  <!--  TODO: Save the message somewhere -->
+    <button mat-button [mat-dialog-close]=null>Send</button>
+  </mat-dialog-actions>
+</div>
