@@ -88,7 +88,6 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
   constructor(
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private _peopleService: PeopleService,
     private _dataStoreService: DataStoreService
   ) { }
 

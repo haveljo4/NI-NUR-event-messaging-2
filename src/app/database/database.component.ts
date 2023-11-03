@@ -104,8 +104,6 @@ export class DatabaseComponent implements OnInit {
     dialog.afterClosed().subscribe((group?: Group) => {
       if (group) {
         this._dataStoreService.addGroup(group);
-        this.groups = this._dataStoreService.getAllGroups();
-        // nechapu proc, tam je to slice, ale funguje to
         this.groups = this.groups.slice()
         this._snackBar.open("Group added!");
       }
