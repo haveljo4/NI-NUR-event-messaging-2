@@ -1,4 +1,5 @@
-export interface Group {
-  id: number;
+import {DataElement} from "./DataElement";
+
+export interface Group extends  DataElement{
   name: string;
 }
