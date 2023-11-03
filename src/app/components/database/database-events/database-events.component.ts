@@ -6,12 +6,10 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 
-import { Group } from "src/app/models/group";
 import { GroupsService } from "src/app/services/groups.service";
 import { ConfirmDialogComponent } from "src/app/components/confirm-dialog/confirm-dialog.component";
 import { EventDialogComponent } from "../event-dialog/event-dialog.component";
 import { FormType } from "src/app/models/enums/form-type";
-import { GroupDialogInject } from "src/app/models/dialog-injects/group-dialog-inject";
 import { WorkEvent } from "src/app/models/workEvent";
 import {EventsService} from "../../../services/events.service";
 import {EventDialogInject} from "../../../models/dialog-injects/event-dialog-inject";
@@ -31,8 +29,9 @@ export class DatabaseEventsComponent  implements OnInit, AfterViewInit {
   get events(): WorkEvent[] {
     return this._events;
   }
+
   displayedColumns: string[] = [
-    "name", "editButton", "deleteButton"
+    "name", "date", "description", "status", "deleteButton", "editButton"
   ];
   filterInput = "";
   @ViewChild(MatSort) sort!: MatSort;

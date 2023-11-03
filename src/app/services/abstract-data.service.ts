@@ -1,10 +1,7 @@
-import { Group } from "../models/group";
-import { GroupForm } from "../models/forms/group-form";
-
 import {DataElement} from "../models/DataElement";
 
 /**
- * T is a type of element store in the store
+ * T is a type of element stored in the store
  * R is a type from which we take all parameters and store it as type T
  */
 export abstract class AbstractDataService <T extends DataElement, R> {
