@@ -19,7 +19,7 @@ export abstract class AbstractDataService <T extends DataElement, R> {
   }
 
   getAll(): T[] {
-    return this._elems.slice();
+    return this._elems;
   }
 
   getElem(id: number): T | undefined {

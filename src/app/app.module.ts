@@ -34,6 +34,7 @@ import { GroupDialogComponent } from "./components/database/group-dialog/group-d
 import { LoginComponent } from "./components/login/login.component";
 import { PhoneNumberPipe } from "./pipes/phone-number.pipe";
 import { DatabaseEventsComponent } from "./components/database/database-events/database-events.component";
+import {EventDialogComponent} from "./components/database/event-dialog/event-dialog.component";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { DatabaseEventsComponent } from "./components/database/database-events/d
     ConfirmDialogComponent,
     PersonDialogComponent,
     GroupDialogComponent,
+    EventDialogComponent,
     LoginComponent,
     PhoneNumberPipe,
     DatabaseEventsComponent,

@@ -80,7 +80,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     dialog.afterClosed().subscribe((confirmed?: boolean) => {
       if (confirmed) {
         this._groupsService.deleteElem(group.id);
-        this.groups = this.groups.slice();
+        this.groups = this._groupsService.getAll();
         this._snackBar.open("Group deleted!");
       }
     });
@@ -96,7 +96,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     dialog.afterClosed().subscribe((afterCloseGroup?: Group) => {
       if (afterCloseGroup) {
         this._groupsService.editElem(afterCloseGroup);
-        this.groups = this.groups.slice();
+        this.groups = this._groupsService.getAll();
         this._snackBar.open("Group edited!");
       }
     });
