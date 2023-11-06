@@ -1,10 +1,10 @@
-export interface Person {
-  id: number;
-  groupId: number;
+import {DataElement} from "./DataElement";
+
+export interface Person extends DataElement{
+  groupIds: number[];
   firstName: string;
   lastName: string;
   phoneNumber: string;
   email?: string;
-
-  groupName?: string;
+  groupNames?: string[];
 }

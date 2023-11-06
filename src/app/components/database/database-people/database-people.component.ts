@@ -85,8 +85,8 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((person?: PersonForm) => {
       if (person) {
-        this._peopleService.addPerson(person);
-        this.people = this._peopleService.getAllPeople();
+        this._peopleService.add(person);
+        this.people = this._peopleService.getAll();
         this._snackBar.open("Person added!");
       }
     });
@@ -98,8 +98,8 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((confirmed?: boolean) => {
       if (confirmed) {
-        this._peopleService.deletePerson(person.id);
-        this.people = this._peopleService.getAllPeople();
+        this._peopleService.deleteElem(person.id);
+        this.people = this._peopleService.getAll();
         this._snackBar.open("Person deleted!");
       }
     });
@@ -115,18 +115,19 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((afterClosePerson?: Person) => {
       if (afterClosePerson) {
-        this._peopleService.editPerson(afterClosePerson);
-        this.people = this._peopleService.getAllPeople();
+        this._peopleService.editElem(afterClosePerson);
+        this.people = this._peopleService.getAll();
         this._snackBar.open("Person edited!");
       }
     });
   }
 
   private _loadData(): void {
-    this.groups = this._groupsService.getAllGroups();
-    this.people = this._peopleService.getAllPeople().map((person) => {
-      person.groupName = this.groups.filter((group) => group.id === person.groupId)[0].name;
-      return person;
-    });
+    this.groups = this._groupsService.getAll();
+    this.people = this._peopleService.getAll();
+    // this.people = this._peopleService.getAll().map((person) => {
+    //   person.groupName = this.groups.filter((group) => group.id === person.groupId)[0].name;
+    //   return person;
+    // });
   }
 }

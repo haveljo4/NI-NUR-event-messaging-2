@@ -25,7 +25,7 @@ export class SendComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.groups = this._groupsService.getAllGroups();
+    this.groups = this._groupsService.getAll();
   }
 
   showSendDialog(): void {
