@@ -27,17 +27,17 @@ export class PeopleService extends AbstractDataService<Person, PersonForm>{
 
     const group = this._groupsService.getElem(person.groupId);
     if (!group) {
-      throw new Error("GroupId does not");
+      throw new Error("GroupId does not exist");
     }
 
-    super._elems.push({
+    this._elems.push({
       id: ++super._maxId,
       groupIds: [person.groupId],
       firstName: person.firstName,
       lastName: person.lastName,
       phoneNumber: person.phoneNumber,
       email: person.email,
-      groupNames: [group.name],
+      groupNames: [group.name]
     });
   }
 }
