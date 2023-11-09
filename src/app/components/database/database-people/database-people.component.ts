@@ -50,8 +50,8 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   dataSource: MatTableDataSource<Person> = new MatTableDataSource(this._people);
-  pageSizeOptions = [5, 10, 25, 100];
-  pageSize = this.pageSizeOptions[1];
+  pageSizeOptions = [10, 25, 100];
+  pageSize = this.pageSizeOptions[0];
 
   constructor(
     private _dialog: MatDialog,
