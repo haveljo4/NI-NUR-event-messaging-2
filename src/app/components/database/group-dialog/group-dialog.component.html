@@ -3,12 +3,11 @@
 <h1 mat-dialog-title>{{data.type}} Group</h1>
 <mat-dialog-content class="mat-typography">
   <p>Enter group name:</p>
-  <mat-form-field appearance="fill" class="wide-field">
+  <mat-form-field appearance="fill" class="wide-field min-width-35">
     <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="group.name">
+    <input matInput [(ngModel)]="group.name" cdkFocusInitial>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]=null>Cancel</button>
-  <button mat-button [mat-dialog-close]="group" cdkFocusInitial>{{data.type}}</button>
+  <button mat-button [mat-dialog-close]="group">Save</button>
 </mat-dialog-actions>
