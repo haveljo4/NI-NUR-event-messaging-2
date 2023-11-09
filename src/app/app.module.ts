@@ -20,6 +20,7 @@ import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from "@angular/mater
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -34,9 +35,9 @@ import { GroupDialogComponent } from "./components/database/group-dialog/group-d
 import { LoginComponent } from "./components/login/login.component";
 import { PhoneNumberPipe } from "./pipes/phone-number.pipe";
 import { DatabaseEventsComponent } from "./components/database/database-events/database-events.component";
+import {EventDialogComponent} from "./components/database/event-dialog/event-dialog.component";
 import { GroupMessageDialogComponent } from './components/message-dialogs/group-message-dialog/group-message-dialog.component';
 import { EventMessageDialogComponent } from './components/message-dialogs/event-message-dialog/event-message-dialog.component';
-import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     ConfirmDialogComponent,
     PersonDialogComponent,
     GroupDialogComponent,
+    EventDialogComponent,
     LoginComponent,
     PhoneNumberPipe,
     DatabaseEventsComponent,

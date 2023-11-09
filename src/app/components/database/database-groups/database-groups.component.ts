@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from "@angular/core";
 
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -21,9 +21,9 @@ import {GroupMessageDialogComponent} from "../../message-dialogs/group-message-d
 export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
 
   private _groups: Group[] = [];
-  set groups(value: Group[]) {
-    this._groups = value;
-    this.dataSource.data = this._groups;
+  @Input() set groups(value: Group[]) {
+    this.dataSource.data = value;
+    this._groups = this._groups.slice();
   }
   get groups(): Group[] {
     return this._groups;
@@ -66,16 +66,16 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((group?: Group) => {
       if (group) {
-        this._groupsService.addGroup(group);
-        this.groups = this._groupsService.getAllGroups();
+        this._groupsService.add(group);
+        this.groups = this._groupsService.getAll();
         this._snackBar.open("Group added!");
       }
     });
   }
 
   deleteGroup(group: Group): void {
-      this._groupsService.deleteGroup(group.id);
-      this.groups = this._groupsService.getAllGroups();
+      this._groupsService.deleteElem(group.id);
+      this.groups = this._groupsService.getAll();
       this._snackBar.open("Group deleted!"); // TODO undo
   }
 
@@ -92,14 +92,14 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((afterCloseGroup?: Group) => {
       if (afterCloseGroup) {
-        this._groupsService.editGroup(afterCloseGroup);
-        this.groups = this._groupsService.getAllGroups();
+        this._groupsService.editElem(afterCloseGroup);
+        this.groups = this._groupsService.getAll();
         this._snackBar.open("Group edited!");
       }
     });
   }
 
   private _loadData(): void {
-    this.groups = this._groupsService.getAllGroups();
+    this.groups = this._groupsService.getAll();
   }
 }
