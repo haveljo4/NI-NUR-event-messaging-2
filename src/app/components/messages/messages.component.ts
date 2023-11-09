@@ -12,6 +12,10 @@ import {GroupDialogInject} from "../../models/dialog-injects/group-dialog-inject
 import {MessagesService} from "../../services/messages.service";
 import {Message} from "../../models/message";
 import {EventsService} from "../../services/events.service";
+import {EventMessageDialogComponent} from "../message-dialogs/event-message-dialog/event-message-dialog.component";
+import {EventMessageDialogInject} from "../../models/dialog-injects/event-message-dialog-inject";
+import {GroupMessageDialogComponent} from "../message-dialogs/group-message-dialog/group-message-dialog.component";
+import {GroupMessageDialogInject} from "../../models/dialog-injects/group-message-dialog-inject";
 
 @Component({
   selector: 'app-messages',
@@ -29,7 +33,7 @@ export class MessagesComponent implements OnInit, AfterViewInit {
     return this._messages;
   }
   displayedColumns: string[] = [
-    "subject", "groups", "event", "date", "time", "details"
+    "subject", "groups", "event", "time", "details"
   ];
   filterInput = "";
   @ViewChild(MatSort) sort!: MatSort;
@@ -74,17 +78,39 @@ export class MessagesComponent implements OnInit, AfterViewInit {
       let idsCopy = ids.slice();
       if (type === "event") {
           const id = idsCopy.pop();
-          if (!id) return "no id";
+          if (!id) return "";
           const event =  this._eventsService.getElem(id);
-          if (!event) return "no event";
+          if (!event) return "";
           return event.name;
       }
       return "";
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId) => {
+      const value = (data as {[key: string]: any})[sortHeaderId];
+
+      if (sortHeaderId === 'subject') {
+        return data.subject.toLowerCase();
+      }
+
+      if (sortHeaderId === 'groups') {
+        return this.getMessageGroups(data.type, data.eventOrGroupIds)?.toLowerCase();
+      }
+
+      if (sortHeaderId === 'event') {
+        return this.getEventName(data.type, data.eventOrGroupIds).toLowerCase();
+      }
+
+      if (sortHeaderId === 'time') {
+        return data.dateTime.toLocaleString();
+      }
+
+      return value;
+    };
+    this.sort.sort({ id: 'time', start: 'desc', disableClear: false});
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(): void {
@@ -94,14 +120,23 @@ export class MessagesComponent implements OnInit, AfterViewInit {
     }
   }
 
-  showMessageDetailDialog(group: Group): void {
-    // TODO
-    const dialog = this._dialog.open(GroupDialogComponent, {
-      data: {
-        group: { ...group },
-        type: FormType.EDIT
-      } as GroupDialogInject
-    });
+  showMessageDetailDialog(message: Message): void {
+    if (message.type === "event") {
+      const dialog = this._dialog.open(EventMessageDialogComponent, {
+        data: {
+          message: message,
+          state: "view"
+        } as EventMessageDialogInject
+      });
+    }
+    else { // group message
+      const dialog = this._dialog.open(GroupMessageDialogComponent, {
+        data: {
+          message: message,
+          state: "view"
+        } as GroupMessageDialogInject
+      });
+    }
   }
 
   private _loadData(): void {

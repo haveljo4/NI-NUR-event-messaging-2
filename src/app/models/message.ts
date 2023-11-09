@@ -5,6 +5,9 @@ export interface Message extends DataElement{
   eventOrGroupIds: number[];
   subject: string;
   message: string;
-  date: string;
-  time: string;
+  dateTime: Date;
+  email: boolean;
+  sms: boolean;
+  whatsapp: boolean;
+  slack: boolean;
 }

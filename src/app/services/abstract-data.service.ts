@@ -7,9 +7,13 @@ import {DataElement} from "../models/DataElement";
 export abstract class AbstractDataService <T extends DataElement, R> {
 
   protected _elems: T[] = [];
-  protected _maxId = Math.max(...this._elems.map((elem) => elem.id), 0);
+  protected _maxId = 0;
 
-  constructor(initialData : T[]) { this._elems = initialData.slice()}
+  constructor(initialData : T[]) {
+    if (initialData)
+      this._elems = initialData.slice()
+    this._maxId = Math.max(...this._elems.map((elem) => elem.id), 0);
+  }
 
   private _findIndex(groupId: number): number {
      return this._elems.findIndex((group) => group.id === groupId);

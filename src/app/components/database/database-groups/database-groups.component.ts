@@ -12,6 +12,9 @@ import {GroupDialogComponent} from "../group-dialog/group-dialog.component";
 import {FormType} from "src/app/models/enums/form-type";
 import {GroupDialogInject} from "src/app/models/dialog-injects/group-dialog-inject";
 import {GroupMessageDialogComponent} from "../../message-dialogs/group-message-dialog/group-message-dialog.component";
+import {MessagesService} from "../../../services/messages.service";
+import {MessageForm} from "../../../models/forms/message-form";
+import {GroupMessageDialogInject} from "../../../models/dialog-injects/group-message-dialog-inject";
 
 @Component({
   selector: "app-database-groups",
@@ -39,7 +42,8 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
   constructor(
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private _groupsService: GroupsService
+    private _groupsService: GroupsService,
+    private _messagesService: MessagesService
   ) { }
 
   ngOnInit(): void {
@@ -80,7 +84,13 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
   }
 
   showMessageGroupDialog(group: Group): void {
-    this._dialog.open(GroupMessageDialogComponent, {data: {groups: group}})
+    const dialog = this._dialog.open(GroupMessageDialogComponent, {data: {state: "send"} as GroupMessageDialogInject})
+    dialog.afterClosed().subscribe((message?: MessageForm) => {
+      if (message) {
+        this._messagesService.add(message);
+        this._snackBar.open("Message sent!");
+      }
+    });
   }
 
   showEditGroupDialog(group: Group): void {
