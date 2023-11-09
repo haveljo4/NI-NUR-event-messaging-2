@@ -21,6 +21,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { MessagesComponent } from './components/messages/messages.component';
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -28,7 +29,6 @@ import { HomeComponent } from "./components/home/home.component";
 import { DatabasePeopleComponent } from "./components/database/database-people/database-people.component";
 import { DatabaseGroupsComponent } from "./components/database/database-groups/database-groups.component";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
-import { SendComponent } from "./components/send/send.component";
 import { ConfirmDialogComponent } from "./components/confirm-dialog/confirm-dialog.component";
 import { PersonDialogComponent } from "./components/database/person-dialog/person-dialog.component";
 import { GroupDialogComponent } from "./components/database/group-dialog/group-dialog.component";
@@ -46,7 +46,6 @@ import { EventMessageDialogComponent } from './components/message-dialogs/event-
     DatabasePeopleComponent,
     DatabaseGroupsComponent,
     PageNotFoundComponent,
-    SendComponent,
     ConfirmDialogComponent,
     PersonDialogComponent,
     GroupDialogComponent,
@@ -56,6 +55,7 @@ import { EventMessageDialogComponent } from './components/message-dialogs/event-
     DatabaseEventsComponent,
     GroupMessageDialogComponent,
     EventMessageDialogComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,
