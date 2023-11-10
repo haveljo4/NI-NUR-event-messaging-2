@@ -1,14 +1,9 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {Group} from "../../models/group";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatDialog} from "@angular/material/dialog";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {GroupsService} from "../../services/groups.service";
-import {GroupDialogComponent} from "../database/group-dialog/group-dialog.component";
-import {FormType} from "../../models/enums/form-type";
-import {GroupDialogInject} from "../../models/dialog-injects/group-dialog-inject";
 import {MessagesService} from "../../services/messages.service";
 import {Message} from "../../models/message";
 import {EventsService} from "../../services/events.service";
@@ -51,14 +46,14 @@ export class MessagesComponent implements OnInit, AfterViewInit {
     this._loadData();
   }
 
-  getMessageGroups(type: string, ids: number[]) {
+  getMessageGroups(type: string, ids: number[]) : string {
     let groupIds: number[] = [];
     let idsCopy = ids.slice();
     if (type === "event") {
       const id = idsCopy.pop();
-      if (!id) return;
+      if (!id) return "";
       const event =  this._eventsService.getElem(id);
-      if (!event) return;
+      if (!event) return "";
       groupIds = event.participantGroupIds;
     }
     else {
@@ -111,6 +106,13 @@ export class MessagesComponent implements OnInit, AfterViewInit {
     };
     this.sort.sort({ id: 'time', start: 'desc', disableClear: false});
     this.dataSource.sort = this.sort;
+
+    this.dataSource.filterPredicate = (data: Message, filter: string) => {
+
+      return data.subject.toLowerCase().startsWith(filter.toLowerCase()) // filter by subject
+        || this.getMessageGroups(data.type, data.eventOrGroupIds).toLowerCase().includes(filter.toLowerCase()) // filter by groups
+        || this.getEventName(data.type, data.eventOrGroupIds).toLowerCase().includes(filter.toLowerCase()); // filter by event
+    };
   }
 
   applyFilter(): void {
