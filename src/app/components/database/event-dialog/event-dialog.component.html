@@ -1,6 +1,11 @@
 <!-- TODO - add to angular forms -->
 
-<h1 mat-dialog-title>{{data.type}} Event</h1>
+<div class="flex-row">
+  <h1 mat-dialog-title>{{data.type}} Event</h1>
+  <button mat-button [mat-dialog-close]=null>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <mat-dialog-content class="mat-typography">
   <p>Enter event name:</p>
   <mat-form-field appearance="fill" class="wide-field">

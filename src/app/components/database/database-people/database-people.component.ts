@@ -78,6 +78,7 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
 
   showAddDialog(): void {
     const dialog = this._dialog.open(PersonDialogComponent, {
+      disableClose: true,
       data: {
         groups: this.groups,
         type: FormType.ADD
@@ -107,6 +108,7 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
 
   showEditPersonDialog(person: Person): void {
     const dialog = this._dialog.open(PersonDialogComponent, {
+      disableClose: true,
       data: {
         person: { ...person },
         groups: this.groups,

@@ -1,6 +1,11 @@
 <!-- TODO - add to angular forms -->
 
-<h1 mat-dialog-title>{{data.type}} Person</h1>
+<div class="flex-row">
+  <h1 mat-dialog-title>{{data.type}} Person</h1>
+  <button mat-button [mat-dialog-close]=null>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <mat-dialog-content class="mat-typography">
   <p>Enter full name:</p>
   <mat-form-field appearance="fill">

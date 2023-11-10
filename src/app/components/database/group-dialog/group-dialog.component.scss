@@ -8,3 +8,8 @@ mat-dialog-content {
     min-width: 35rem;
 }
 
+.flex-row {
+  display: flex;
+  margin-bottom: 15px;
+  justify-content: space-between;
+}

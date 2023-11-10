@@ -63,6 +63,7 @@ export class DatabaseEventsComponent  implements OnInit, AfterViewInit {
 
   showAddDialog(): void {
     const dialog = this._dialog.open(EventDialogComponent, {
+      disableClose: true,
       data: {
         type: FormType.ADD
       } as EventDialogInject
@@ -91,6 +92,7 @@ export class DatabaseEventsComponent  implements OnInit, AfterViewInit {
 
   showEditEventDialog(event: WorkEvent): void {
     const dialog = this._dialog.open(EventDialogComponent, {
+      disableClose: true,
       data: {
         event: { ...event },
         type: FormType.EDIT

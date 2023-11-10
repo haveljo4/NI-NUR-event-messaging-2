@@ -28,9 +28,11 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     this.dataSource.data = value;
     this._groups = this._groups.slice();
   }
+
   get groups(): Group[] {
     return this._groups;
   }
+
   displayedColumns: string[] = [
     "name", "messageButton", "editButton", "deleteButton"
   ];
@@ -44,7 +46,8 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     private _snackBar: MatSnackBar,
     private _groupsService: GroupsService,
     private _messagesService: MessagesService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this._loadData();
@@ -64,6 +67,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
 
   showAddDialog(): void {
     const dialog = this._dialog.open(GroupDialogComponent, {
+      disableClose: true,
       data: {
         type: FormType.ADD
       } as GroupDialogInject
@@ -78,13 +82,16 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
   }
 
   deleteGroup(group: Group): void {
-      this._groupsService.deleteElem(group.id);
-      this.groups = this._groupsService.getAll();
-      this._snackBar.open("Group deleted!"); // TODO undo
+    this._groupsService.deleteElem(group.id);
+    this.groups = this._groupsService.getAll();
+    this._snackBar.open("Group deleted!"); // TODO undo
   }
 
   showMessageGroupDialog(group: Group): void {
-    const dialog = this._dialog.open(GroupMessageDialogComponent, {data: {state: "send"} as GroupMessageDialogInject})
+    const dialog = this._dialog.open(GroupMessageDialogComponent, {
+      disableClose: true,
+      data: {state: "send"} as GroupMessageDialogInject
+    })
     dialog.afterClosed().subscribe((message?: MessageForm) => {
       if (message) {
         this._messagesService.add(message);
@@ -95,8 +102,9 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
 
   showEditGroupDialog(group: Group): void {
     const dialog = this._dialog.open(GroupDialogComponent, {
+      disableClose: true,
       data: {
-        group: { ...group },
+        group: {...group},
         type: FormType.EDIT
       } as GroupDialogInject
     });
