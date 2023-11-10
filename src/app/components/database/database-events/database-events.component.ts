@@ -31,7 +31,7 @@ export class DatabaseEventsComponent  implements OnInit, AfterViewInit {
   }
 
   displayedColumns: string[] = [
-    "name", "date", "description", "status", "deleteButton", "editButton"
+    "name", "date", "description", "status", "editButton", "deleteButton"
   ];
   filterInput = "";
   @ViewChild(MatSort) sort!: MatSort;
