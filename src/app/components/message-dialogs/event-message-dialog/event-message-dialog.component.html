@@ -10,10 +10,10 @@
     <!-- TODO: Event Picker -->
 
     <div class="flex-row">
-      <mat-checkbox cdkFocusInitial [ngModel]="message.email" [disabled]="state === 'view'">E-Mail</mat-checkbox>
-      <mat-checkbox [ngModel]="message.sms" [disabled]="state === 'view'">SMS</mat-checkbox>
-      <mat-checkbox [ngModel]="message.whatsapp" [disabled]="state === 'view'">WhatsApp</mat-checkbox>
-      <mat-checkbox [ngModel]="message.slack" [disabled]="state === 'view'">Slack</mat-checkbox>
+      <mat-checkbox cdkFocusInitial [(ngModel)]="message.email" [disabled]="state === 'view'">E-Mail</mat-checkbox>
+      <mat-checkbox [(ngModel)]="message.sms" [disabled]="state === 'view'">SMS</mat-checkbox>
+      <mat-checkbox [(ngModel)]="message.whatsapp" [disabled]="state === 'view'">WhatsApp</mat-checkbox>
+      <mat-checkbox [(ngModel)]="message.slack" [disabled]="state === 'view'">Slack</mat-checkbox>
     </div>
 
     <mat-form-field appearance="fill" class="wide-field">
