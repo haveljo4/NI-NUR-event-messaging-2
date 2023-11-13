@@ -19,7 +19,7 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
   @Input() isReadOnly = false;
   @Output() selectedIds = new EventEmitter<number[]>();
 
-  searchControl = new FormControl();
+  searchControl = new FormControl<string | T>("");
   allItems: T[] = [];
   filteredOptions: Observable<T[]> = new Observable<T[]>(); // assign in ngOnInit()
   selectedItems: T[] = [];
@@ -28,9 +28,15 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
     this.allItems = this.elementService.getAll();
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(""),
-      map(value => this._filter(value || ""))
+      map(value => {
+        if (value === null) {
+          return this.allItems;
+        }
+        const label = typeof value === "string" ? value : this.createLabel(value);
+        return this._filter(label);
+      })
     );
-    // this._preselectItems();
+    this._preselectItems();
   }
 
   private _filter(value: string): T[] {
@@ -52,16 +58,16 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
     }
   }
 
-  select(event: MatAutocompleteSelectedEvent): void {
+  onOptionSelected(event: MatAutocompleteSelectedEvent): void {
     const item = event.option.value as T;
-    const index = this.selectedItems.indexOf(item);
+    const index = this.allItems.indexOf(item);
     if (index >= 0) {
-      const removed = this.selectedItems.splice(index, 1);
+      const removed = this.allItems.splice(index, 1);
       removed.forEach(el => this.selectedItems.push(el));
     }
     this.searchControl.setValue(null);
     this._filter("");
-    // this.emitSelectedIds();
+    this.emitSelectedIds();
   }
 
   emitSelectedIds(): void {
