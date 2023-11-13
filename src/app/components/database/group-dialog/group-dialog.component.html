@@ -7,12 +7,12 @@
   </button>
 </div>
 <mat-dialog-content class="mat-typography">
-  <p>Enter group name:</p>
   <mat-form-field appearance="fill" class="wide-field min-width-35">
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="group.name" cdkFocusInitial>
   </mat-form-field>
-  <h3>Members</h3>
+  <mat-divider></mat-divider>
+  <p style="margin-top: 1rem">Add people to group</p>
   <app-multiselect [elementService]="peopleService"
                    [createLabel]="createLabel"
                    [label]="'Search people'"

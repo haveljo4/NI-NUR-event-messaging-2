@@ -41,6 +41,7 @@ import { EventMessageDialogComponent } from "./components/message-dialogs/event-
 import { MultiselectComponent } from "./components/multiselect/multiselect.component";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -61,33 +62,34 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     MessagesComponent,
     MultiselectComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatTabsModule,
-    MatTableModule,
-    MatSidenavModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatTooltipModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    ReactiveFormsModule,
-    MatAutocompleteModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatTabsModule,
+        MatTableModule,
+        MatSidenavModule,
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatSnackBarModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatTooltipModule,
+        MatCheckboxModule,
+        MatChipsModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatDividerModule
+    ],
   providers: [
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
