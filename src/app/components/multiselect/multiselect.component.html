@@ -1,24 +1,32 @@
-<form class="form" *ngIf="!isReadOnly">
-  <mat-form-field class="full-width">
-    <mat-label>{{label}}</mat-label>
-    <input type="text"
-           matInput
-           [formControl]="searchControl"
-           [matAutocomplete]="auto">
-    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{createLabel(option)}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+<div class="select-div">
+  <form class="full-width" *ngIf="!isReadOnly">
+    <mat-form-field class="full-width">
+      <mat-label>🔎 {{label}}</mat-label>
+      <input type="text"
+             matInput
+             [formControl]="searchControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{createLabel(option)}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <button mat-button>
+    TODO add new
+  </button>
+</div>
 
-<mat-chip-list [selectable]=false>
-  <mat-chip *ngFor="let item of displayedChips" [selectable]="false" [removable]="!isReadOnly"
-            (removed)="removeSelectedItem(item)">
-    {{createLabel(item)}}
-    <mat-icon matChipRemove *ngIf="!isReadOnly">cancel</mat-icon>
-  </mat-chip>
-</mat-chip-list>
+<div *ngIf="this.selectedItems.length !== 0" class="full-width chip-div">
+  <mat-chip-list [selectable]=false class="chips">
+    <mat-chip *ngFor="let item of displayedChips" [selectable]="false" [removable]="!isReadOnly"
+              (removed)="removeSelectedItem(item)">
+      {{createLabel(item)}}
+      <mat-icon matChipRemove *ngIf="!isReadOnly">cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
 
-<input *ngIf="this.selectedItems.length !== 0" matInput [(ngModel)]="chipsFilter" (keyup)="filterChips()" placeholder="Filter selected">
+  <input class="chip-filter" matInput [(ngModel)]="chipsFilter" (keyup)="filterChips()"
+         placeholder="Filter selected">
+</div>
