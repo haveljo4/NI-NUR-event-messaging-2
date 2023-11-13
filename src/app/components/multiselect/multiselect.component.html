@@ -1,14 +1,4 @@
-<!--<mat-form-field class="full-width" *ngIf="!isReadOnly">-->
-<!--  <input type="text" placeholder="Search" matInput [formControl]="searchControl" [matAutocomplete]="auto">-->
-<!--  <mat-label>{{label}}</mat-label>-->
-<!--  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="select($event)">-->
-<!--    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">-->
-<!--      {{createLabel(option)}}-->
-<!--    </mat-option>-->
-<!--  </mat-autocomplete>-->
-<!--</mat-form-field>-->
-
-<form class="form">
+<form class="form" *ngIf="!isReadOnly">
   <mat-form-field class="full-width">
     <mat-label>{{label}}</mat-label>
     <input type="text"
@@ -23,12 +13,12 @@
   </mat-form-field>
 </form>
 
-<!--<mat-chip-list>-->
-<!--  <mat-chip *ngFor="let item of selectedItems" [selectable]="!isReadOnly" [removable]="!isReadOnly"-->
-<!--            (removed)="removeChip(item)">-->
-<!--    {{createLabel(item)}}-->
-<!--    <mat-icon matChipRemove *ngIf="!isReadOnly"></mat-icon>-->
-<!--  </mat-chip>-->
-<!--</mat-chip-list>-->
+<mat-chip-list [selectable]=false>
+  <mat-chip *ngFor="let item of displayedChips" [selectable]="false" [removable]="!isReadOnly"
+            (removed)="removeSelectedItem(item)">
+    {{createLabel(item)}}
+    <mat-icon matChipRemove *ngIf="!isReadOnly">cancel</mat-icon>
+  </mat-chip>
+</mat-chip-list>
 
-<!--<input matInput (keyup)="filterChips($event.target)" placeholder="Filter selected">-->
+<input *ngIf="this.selectedItems.length !== 0" matInput [(ngModel)]="chipsFilter" (keyup)="filterChips()" placeholder="Filter selected">

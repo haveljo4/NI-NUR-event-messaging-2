@@ -23,6 +23,8 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
   allItems: T[] = [];
   filteredOptions: Observable<T[]> = new Observable<T[]>(); // assign in ngOnInit()
   selectedItems: T[] = [];
+  displayedChips: T[] = [];
+  chipsFilter = "";
 
   ngOnInit(): void {
     this.allItems = this.elementService.getAll();
@@ -65,6 +67,8 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
       const removed = this.allItems.splice(index, 1);
       removed.forEach(el => this.selectedItems.push(el));
     }
+    this.displayedChips = this.selectedItems;
+    this.chipsFilter = "";
     this.searchControl.setValue(null);
     this._filter("");
     this.emitSelectedIds();
@@ -75,11 +79,17 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
     this.selectedIds.emit(ids);
   }
 
-  filterChips(value: EventTarget | null): void {
-    console.log(value);
+  filterChips(): void {
+    if (this.chipsFilter === "") {
+      this.displayedChips = this.selectedItems;
+    } else {
+      this.displayedChips = this.selectedItems.filter(item =>
+        this.createLabel(item).toLowerCase().includes(this.chipsFilter.toLowerCase())
+      );
+    }
   }
 
-  removeChip(item: T): void {
+  removeSelectedItem(item: T): void {
     const index = this.selectedItems.indexOf(item);
 
     if (index >= 0) {
