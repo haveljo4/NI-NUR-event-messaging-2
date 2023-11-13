@@ -12,6 +12,14 @@
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="group.name" cdkFocusInitial>
   </mat-form-field>
+  <h3>Members</h3>
+  <app-multiselect [elementService]="peopleService"
+                   [createLabel]="createLabel"
+                   [label]="'Search people'"
+                   [preselectedIds]="[]"
+                   [isReadOnly]=false
+                   [(ngModel)]="membersIds">
+  </app-multiselect>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button [mat-dialog-close]="group">Save</button>

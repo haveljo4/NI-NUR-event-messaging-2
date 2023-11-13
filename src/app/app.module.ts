@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
@@ -21,7 +21,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import { MessagesComponent } from './components/messages/messages.component';
+import { MessagesComponent } from "./components/messages/messages.component";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -36,8 +36,11 @@ import { LoginComponent } from "./components/login/login.component";
 import { PhoneNumberPipe } from "./pipes/phone-number.pipe";
 import { DatabaseEventsComponent } from "./components/database/database-events/database-events.component";
 import {EventDialogComponent} from "./components/database/event-dialog/event-dialog.component";
-import { GroupMessageDialogComponent } from './components/message-dialogs/group-message-dialog/group-message-dialog.component';
-import { EventMessageDialogComponent } from './components/message-dialogs/event-message-dialog/event-message-dialog.component';
+import { GroupMessageDialogComponent } from "./components/message-dialogs/group-message-dialog/group-message-dialog.component";
+import { EventMessageDialogComponent } from "./components/message-dialogs/event-message-dialog/event-message-dialog.component";
+import { MultiselectComponent } from "./components/multiselect/multiselect.component";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -56,6 +59,7 @@ import { EventMessageDialogComponent } from './components/message-dialogs/event-
     GroupMessageDialogComponent,
     EventMessageDialogComponent,
     MessagesComponent,
+    MultiselectComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +83,10 @@ import { EventMessageDialogComponent } from './components/message-dialogs/event-
     MatPaginatorModule,
     MatSortModule,
     MatTooltipModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatChipsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule
   ],
   providers: [
     {
