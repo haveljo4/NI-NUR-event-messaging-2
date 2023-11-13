@@ -14,7 +14,8 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 export class MultiselectComponent<T extends DataElement, R> implements OnInit {
   @Input() elementService!: AbstractDataService<T, R>; // Must be initialized, otherwise 💩
   @Input() createLabel!: (el: T) => string; // Must be initialized, otherwise 💩
-  @Input() label = "";
+  @Input() searchLabel = "";
+  @Input() buttonLabel = "";
   @Input() preselectedIds: number[] = [];
   @Input() isReadOnly = false;
   @Output() selectedIds = new EventEmitter<number[]>();
@@ -25,6 +26,7 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
   selectedItems: T[] = [];
   displayedChips: T[] = [];
   chipsFilter = "";
+  @Input() buttonFunction = () => {};
 
   ngOnInit(): void {
     this.allItems = this.elementService.getAll();
@@ -96,5 +98,10 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
       const removed = this.selectedItems.splice(index, 1);
       removed.forEach(el => this.allItems.push(el));
     }
+  }
+
+  callButtonFunction(): void {
+    this.buttonFunction();
+    // TODO Renew data from service
   }
 }

@@ -16,7 +16,9 @@
     <p style="margin-top: 1rem">Add people to group</p>
     <app-multiselect [elementService]="peopleService"
                      [createLabel]="createLabel"
-                     [label]="'Search people'"
+                     [searchLabel]="'Search people'"
+                     [buttonLabel]="'Add Person'"
+                     [buttonFunction]="addNewPerson"
                      [preselectedIds]="[]"
                      [isReadOnly]=false
                      [(ngModel)]="membersIds">

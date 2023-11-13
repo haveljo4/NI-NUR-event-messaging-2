@@ -29,4 +29,8 @@ export class GroupDialogComponent implements OnInit {
     }
   }
 
+  addNewPerson(): void {
+    // TODO
+    console.log("addNewPerson");
+  }
 }

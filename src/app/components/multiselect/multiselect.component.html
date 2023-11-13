@@ -1,7 +1,7 @@
 <div class="select-div">
   <form class="full-width" *ngIf="!isReadOnly">
     <mat-form-field class="full-width">
-      <mat-label>🔎 {{label}}</mat-label>
+      <mat-label>🔎 {{searchLabel}}</mat-label>
       <input type="text"
              matInput
              [formControl]="searchControl"
@@ -13,8 +13,8 @@
       </mat-autocomplete>
     </mat-form-field>
   </form>
-  <button mat-button>
-    TODO add new
+  <button mat-button (click)="callButtonFunction()">
+    {{buttonLabel}}
   </button>
 </div>
 
