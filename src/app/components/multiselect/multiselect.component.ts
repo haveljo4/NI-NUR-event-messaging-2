@@ -42,6 +42,7 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
       })
     );
     this._preselectItems();
+    this.emitSelectedIds();
   }
 
   private _filter(value: string): T[] {
@@ -57,24 +58,29 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
       this.preselectedIds.forEach(id => {
         const item = this.allItems.find(i => i.id === id);
         if (item) {
-          this.selectedItems.push(item);
+          this.moveItemFromAllToSelected(item)
         }
       });
+      this.displayedChips = this.selectedItems;
     }
   }
 
   onOptionSelected(event: MatAutocompleteSelectedEvent): void {
     const item = event.option.value as T;
-    const index = this.allItems.indexOf(item);
-    if (index >= 0) {
-      const removed = this.allItems.splice(index, 1);
-      removed.forEach(el => this.selectedItems.push(el));
-    }
+    this.moveItemFromAllToSelected(item)
     this.displayedChips = this.selectedItems;
     this.chipsFilter = "";
     this.searchControl.setValue(null);
     this._filter("");
     this.emitSelectedIds();
+  }
+
+  moveItemFromAllToSelected(item: T): void {
+    const index = this.allItems.indexOf(item);
+    if (index >= 0) {
+      const removed = this.allItems.splice(index, 1);
+      removed.forEach(el => this.selectedItems.push(el));
+    }
   }
 
   emitSelectedIds(): void {
@@ -92,12 +98,13 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
     }
   }
 
-  removeSelectedItem(item: T): void {
+  removeSelectedChip(item: T): void {
     const index = this.selectedItems.indexOf(item);
 
     if (index >= 0) {
       const removed = this.selectedItems.splice(index, 1);
       removed.forEach(el => this.allItems.push(el));
+      this.emitSelectedIds();
     }
   }
 

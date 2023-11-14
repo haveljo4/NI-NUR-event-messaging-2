@@ -21,7 +21,7 @@
 <div *ngIf="this.selectedItems.length !== 0" class="full-width chip-div">
   <mat-chip-list [selectable]=false class="chips">
     <mat-chip *ngFor="let item of displayedChips" [selectable]="false" [removable]="!isReadOnly"
-              (removed)="removeSelectedItem(item)">
+              (removed)="removeSelectedChip(item)">
       {{convertElementToString(item)}}
       <mat-icon matChipRemove *ngIf="!isReadOnly">cancel</mat-icon>
     </mat-chip>

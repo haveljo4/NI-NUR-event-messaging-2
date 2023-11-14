@@ -15,6 +15,8 @@ import {GroupMessageDialogComponent} from "../../message-dialogs/group-message-d
 import {MessagesService} from "../../../services/messages.service";
 import {MessageForm} from "../../../models/forms/message-form";
 import {GroupMessageDialogInject} from "../../../models/dialog-injects/group-message-dialog-inject";
+import {GroupDialogData} from "../../../models/dialog-data/group-dialog-data";
+import {PeopleService} from "../../../services/people.service";
 
 @Component({
   selector: "app-database-groups",
@@ -45,7 +47,8 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     private _dialog: MatDialog,
     private _snackBar: MatSnackBar,
     private _groupsService: GroupsService,
-    private _messagesService: MessagesService
+    private _messagesService: MessagesService,
+    private _peopleService: PeopleService
   ) {
   }
 
@@ -91,7 +94,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     const dialog = this._dialog.open(GroupMessageDialogComponent, {
       disableClose: true,
       data: {state: "send"} as GroupMessageDialogInject
-    })
+    });
     dialog.afterClosed().subscribe((message?: MessageForm) => {
       if (message) {
         this._messagesService.add(message);
@@ -108,12 +111,32 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
         type: FormType.EDIT
       } as GroupDialogInject
     });
-    dialog.afterClosed().subscribe((afterCloseGroup?: Group) => {
-      if (afterCloseGroup) {
-        this._groupsService.editElem(afterCloseGroup);
+    dialog.afterClosed().subscribe((afterClose: GroupDialogData) => {
+      if (!afterClose) {
+        return;
+      }
+
+      if (afterClose.group) {
+        this._groupsService.editElem(afterClose.group);
         this.groups = this._groupsService.getAll();
         this._snackBar.open("Group edited!");
       }
+
+      // remove the unassigned people from the group
+      const assigned = this._peopleService.getAll().filter(p => p.groupIds.includes(afterClose.group.id));
+      assigned.filter(p => !afterClose.membersIds.includes(p.id)).forEach(p => {
+        p.groupIds = p.groupIds.filter(id => id !== afterClose.group.id);
+        this._peopleService.editElem(p);
+      });
+
+      // add the newly assigned people to the group
+      afterClose.membersIds.filter(id => !assigned.map(p => p.id).includes(id)).forEach(id => {
+        const person = this._peopleService.getElem(id);
+        if (person) {
+          person.groupIds.push(afterClose.group.id);
+          this._peopleService.editElem(person);
+        }
+      });
     });
   }
 
