@@ -8,7 +8,7 @@
              [matAutocomplete]="auto">
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
         <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-          {{createLabel(option)}}
+          {{convertElementToString(option)}}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
@@ -22,7 +22,7 @@
   <mat-chip-list [selectable]=false class="chips">
     <mat-chip *ngFor="let item of displayedChips" [selectable]="false" [removable]="!isReadOnly"
               (removed)="removeSelectedItem(item)">
-      {{createLabel(item)}}
+      {{convertElementToString(item)}}
       <mat-icon matChipRemove *ngIf="!isReadOnly">cancel</mat-icon>
     </mat-chip>
   </mat-chip-list>

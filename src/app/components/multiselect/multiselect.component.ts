@@ -13,7 +13,6 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 })
 export class MultiselectComponent<T extends DataElement, R> implements OnInit {
   @Input() elementService!: AbstractDataService<T, R>; // Must be initialized, otherwise 💩
-  @Input() createLabel!: (el: T) => string; // Must be initialized, otherwise 💩
   @Input() searchLabel = "";
   @Input() buttonLabel = "";
   @Input() preselectedIds: number[] = [];
@@ -26,9 +25,11 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
   selectedItems: T[] = [];
   displayedChips: T[] = [];
   chipsFilter = "";
+  convertElementToString: (el: T) => string = (el: T) => "";
   @Input() buttonFunction = () => {};
 
   ngOnInit(): void {
+    this.convertElementToString = this.elementService.convertElementToString;
     this.allItems = this.elementService.getAll();
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(""),
@@ -36,7 +37,7 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
         if (value === null) {
           return this.allItems;
         }
-        const label = typeof value === "string" ? value : this.createLabel(value);
+        const label = typeof value === "string" ? value : this.convertElementToString(value);
         return this._filter(label);
       })
     );
@@ -48,7 +49,7 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
       return this.allItems;
     }
     const filterValue = value.toLowerCase();
-    return this.allItems.filter(el => this.createLabel(el).toLowerCase().includes(filterValue));
+    return this.allItems.filter(el => this.convertElementToString(el).toLowerCase().includes(filterValue));
   }
 
   private _preselectItems(): void {
@@ -86,7 +87,7 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
       this.displayedChips = this.selectedItems;
     } else {
       this.displayedChips = this.selectedItems.filter(item =>
-        this.createLabel(item).toLowerCase().includes(this.chipsFilter.toLowerCase())
+        this.convertElementToString(item).toLowerCase().includes(this.chipsFilter.toLowerCase())
       );
     }
   }

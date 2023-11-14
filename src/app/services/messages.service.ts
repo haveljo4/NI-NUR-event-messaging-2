@@ -12,7 +12,7 @@ export class MessagesService extends AbstractDataService<Message, Message>{
     super(MESSAGES);
   }
 
-  override add (message: Message | MessageForm): void {
+  override add(message: Message | MessageForm): void {
     if (message.id) {
       this._elems.push(message as Message);
     }
@@ -22,5 +22,9 @@ export class MessagesService extends AbstractDataService<Message, Message>{
         id: ++this._maxId
       } as Message);
     }
+  }
+
+  convertElementToString(elem: Message): string {
+    return elem.subject;
   }
 }

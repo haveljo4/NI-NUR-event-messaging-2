@@ -19,4 +19,9 @@ export class GroupsService extends AbstractDataService<Group, GroupForm>{
 
     this._elems.push({ id: ++this._maxId, name: group.name });
   }
+
+
+  convertElementToString(elem: Group): string {
+    return elem.name;
+  }
 }
