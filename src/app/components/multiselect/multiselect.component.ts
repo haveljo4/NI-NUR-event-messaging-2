@@ -30,7 +30,7 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
 
   ngOnInit(): void {
     this.convertElementToString = this.elementService.convertElementToString;
-    this.allItems = this.elementService.getAll();
+    this.allItems = this.elementService.getAll().slice();
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(""),
       map(value => {
