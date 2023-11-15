@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
@@ -20,6 +20,8 @@ import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from "@angular/mater
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { MessagesComponent } from "./components/messages/messages.component";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -27,7 +29,6 @@ import { HomeComponent } from "./components/home/home.component";
 import { DatabasePeopleComponent } from "./components/database/database-people/database-people.component";
 import { DatabaseGroupsComponent } from "./components/database/database-groups/database-groups.component";
 import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
-import { SendComponent } from "./components/send/send.component";
 import { ConfirmDialogComponent } from "./components/confirm-dialog/confirm-dialog.component";
 import { PersonDialogComponent } from "./components/database/person-dialog/person-dialog.component";
 import { GroupDialogComponent } from "./components/database/group-dialog/group-dialog.component";
@@ -35,6 +36,12 @@ import { LoginComponent } from "./components/login/login.component";
 import { PhoneNumberPipe } from "./pipes/phone-number.pipe";
 import { DatabaseEventsComponent } from "./components/database/database-events/database-events.component";
 import {EventDialogComponent} from "./components/database/event-dialog/event-dialog.component";
+import { GroupMessageDialogComponent } from "./components/message-dialogs/group-message-dialog/group-message-dialog.component";
+import { EventMessageDialogComponent } from "./components/message-dialogs/event-message-dialog/event-message-dialog.component";
+import { MultiselectComponent } from "./components/multiselect/multiselect.component";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -43,7 +50,6 @@ import {EventDialogComponent} from "./components/database/event-dialog/event-dia
     DatabasePeopleComponent,
     DatabaseGroupsComponent,
     PageNotFoundComponent,
-    SendComponent,
     ConfirmDialogComponent,
     PersonDialogComponent,
     GroupDialogComponent,
@@ -51,30 +57,39 @@ import {EventDialogComponent} from "./components/database/event-dialog/event-dia
     LoginComponent,
     PhoneNumberPipe,
     DatabaseEventsComponent,
+    GroupMessageDialogComponent,
+    EventMessageDialogComponent,
+    MessagesComponent,
+    MultiselectComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatTabsModule,
-    MatTableModule,
-    MatSidenavModule,
-    MatProgressSpinnerModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatTooltipModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatTabsModule,
+        MatTableModule,
+        MatSidenavModule,
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatSnackBarModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatTooltipModule,
+        MatCheckboxModule,
+        MatChipsModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatDividerModule
+    ],
   providers: [
     {
       provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,

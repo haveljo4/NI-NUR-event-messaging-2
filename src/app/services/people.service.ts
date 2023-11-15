@@ -16,7 +16,7 @@ export class PeopleService extends AbstractDataService<Person, PersonForm>{
   }
 
 
-  override add (person: PersonForm): void {
+  override add(person: PersonForm): void {
     if (!person.groupId || !person.firstName || !person.lastName || !person.phoneNumber) {
       throw new Error("Person's required properties are undefined");
     }
@@ -39,5 +39,10 @@ export class PeopleService extends AbstractDataService<Person, PersonForm>{
       email: person.email,
       groupNames: [group.name]
     });
+  }
+
+
+  convertElementToString(elem: Person): string {
+    return `${elem.firstName} ${elem.lastName}`;
   }
 }

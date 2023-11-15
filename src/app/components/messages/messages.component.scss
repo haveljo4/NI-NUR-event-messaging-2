@@ -39,6 +39,20 @@ mat-spinner {
   margin: 0 auto;
   top: 10rem;
 }
+
+
+
+.mat-column-name {
+  flex: 1;
+}
+
+
+.mat-column-messageButton {
+  width: 100px;
+  text-align: center;
+
+}
+
 .mat-column-editButton {
   width: 100px;
   text-align: center;
@@ -47,4 +61,8 @@ mat-spinner {
 .mat-column-deleteButton {
   width: 100px;
   text-align: center;
+}
+
+.messages-container {
+  width: 80%;
 }

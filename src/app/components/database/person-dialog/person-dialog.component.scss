@@ -6,3 +6,9 @@ mat-dialog-content {
     width: 100%;
   }
 }
+
+.flex-row {
+  display: flex;
+  margin-bottom: 15px;
+  justify-content: space-between;
+}

@@ -1,0 +1,32 @@
+<div class="select-div">
+  <form class="full-width" *ngIf="!isReadOnly">
+    <mat-form-field class="full-width">
+      <mat-label>🔎 {{searchLabel}}</mat-label>
+      <input type="text"
+             matInput
+             [formControl]="searchControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{convertElementToString(option)}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <button mat-button (click)="callButtonFunction()">
+    {{buttonLabel}}
+  </button>
+</div>
+
+<div *ngIf="this.selectedItems.length !== 0" class="full-width chip-div">
+  <mat-chip-list [selectable]=false class="chips">
+    <mat-chip *ngFor="let item of displayedChips" [selectable]="false" [removable]="!isReadOnly"
+              (removed)="removeSelectedChip(item)">
+      {{convertElementToString(item)}}
+      <mat-icon matChipRemove *ngIf="!isReadOnly">cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+
+  <input class="chip-filter" matInput [(ngModel)]="chipsFilter" (keyup)="filterChips()"
+         placeholder="Filter selected">
+</div>

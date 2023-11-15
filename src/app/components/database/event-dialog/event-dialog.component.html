@@ -1,11 +1,16 @@
 <!-- TODO - add to angular forms -->
 
-<h1 mat-dialog-title>{{data.type}} Event</h1>
+<div class="flex-row">
+  <h1 mat-dialog-title>{{data.type}} Event</h1>
+  <button mat-button [mat-dialog-close]=null>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <mat-dialog-content class="mat-typography">
   <p>Enter event name:</p>
   <mat-form-field appearance="fill" class="wide-field">
     <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="event.name">
+    <input cdkFocusInitial matInput [(ngModel)]="event.name">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Date </mat-label>
@@ -26,6 +31,5 @@
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]=null>Cancel</button>
-  <button mat-button [mat-dialog-close]="event" cdkFocusInitial>{{data.type}}</button>
+  <button mat-button [mat-dialog-close]="event" cdkFocusInitial>Save</button>
 </mat-dialog-actions>

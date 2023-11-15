@@ -6,6 +6,12 @@
   margin-bottom: 22rem;
   table {
     width: 100%;
+    .mat-row {
+      &:hover {
+        background-color: #F5F5F5;
+        cursor: pointer;
+      }
+    }
   }
 }
 
@@ -32,5 +38,28 @@ mat-drawer-container {
 mat-spinner {
   margin: 0 auto;
   top: 10rem;
+}
+
+
+
+.mat-column-name {
+  flex: 1;
+}
+
+
+.mat-column-messageButton {
+  width: 100px;
+  text-align: center;
+
+}
+
+.mat-column-editButton {
+  width: 100px;
+  text-align: center;
+}
+
+.mat-column-deleteButton {
+  width: 100px;
+  text-align: center;
 }
 

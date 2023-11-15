@@ -1,6 +1,19 @@
+.dialog {
+  width: 50rem;
+}
+
 mat-dialog-content {
   mat-form-field + mat-form-field {
     margin-left: 0.5rem;
   }
 }
 
+.min-width-35 {
+    min-width: 35rem;
+}
+
+.flex-row {
+  display: flex;
+  margin-bottom: 15px;
+  justify-content: space-between;
+}

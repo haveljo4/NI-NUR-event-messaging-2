@@ -1,7 +1,7 @@
-import { GroupForm } from "../forms/group-form";
-import { FormType } from "../enums/form-type";
+import {FormType} from "../enums/form-type";
+import {Group} from "../group";
 
 export interface GroupDialogInject {
-  group?: GroupForm;
+  group?: Group;
   type: FormType;
 }

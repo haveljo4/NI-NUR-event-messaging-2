@@ -1,0 +1,34 @@
+<div class="form">
+  <div class="flex-row">
+    <h1 style="margin: 0">{{state === "send" ? "Send " : ""}}Group Message</h1>
+    <button mat-button [mat-dialog-close]=null>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="mat-typography">
+
+  <!-- TODO: Group Picker -->
+
+    <div class="flex-row">
+        <mat-checkbox cdkFocusInitial [(ngModel)]="message.email" [disabled]="state === 'view'">E-Mail</mat-checkbox>
+        <mat-checkbox [(ngModel)]="message.sms" [disabled]="state === 'view'">SMS</mat-checkbox>
+        <mat-checkbox [(ngModel)]="message.whatsapp" [disabled]="state === 'view'">WhatsApp</mat-checkbox>
+        <mat-checkbox [(ngModel)]="message.slack" [disabled]="state === 'view'">Slack</mat-checkbox>
+    </div>
+
+    <mat-form-field appearance="fill" class="wide-field">
+      <mat-label>Subject</mat-label>
+      <input matInput [(ngModel)]="message.subject" [disabled]="state === 'view'">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="wide-field">
+      <mat-label>Message</mat-label>
+      <textarea [rows]="10" matInput [(ngModel)]="message.message" [disabled]="state === 'view'"></textarea>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" *ngIf="state === 'send'">
+    <button mat-button [mat-dialog-close]=message>Send</button>
+  </mat-dialog-actions>
+</div>

@@ -1,14 +1,29 @@
 <!-- TODO - add to angular forms -->
 
-<h1 mat-dialog-title>{{data.type}} Group</h1>
-<mat-dialog-content class="mat-typography">
-  <p>Enter group name:</p>
-  <mat-form-field appearance="fill" class="wide-field">
-    <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="group.name">
-  </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]=null>Cancel</button>
-  <button mat-button [mat-dialog-close]="group" cdkFocusInitial>{{data.type}}</button>
-</mat-dialog-actions>
+<div class="dialog">
+  <div class="flex-row">
+    <h1 mat-dialog-title>{{inject.type}} Group</h1>
+    <button mat-button [mat-dialog-close]=null>
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="mat-typography">
+    <mat-form-field appearance="fill" class="wide-field min-width-35">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="data.group.name" cdkFocusInitial>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <p style="margin-top: 1rem">Add people to group</p>
+    <app-multiselect [elementService]="peopleService"
+                     [searchLabel]="'Search people'"
+                     [buttonLabel]="'Add Person'"
+                     [buttonFunction]="addNewPerson"
+                     [preselectedIds]="data.membersIds"
+                     [isReadOnly]=false
+                     (selectedIds)="saveMemberIds($event)">
+    </app-multiselect>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="data">Save</button>
+  </mat-dialog-actions>
+</div>
