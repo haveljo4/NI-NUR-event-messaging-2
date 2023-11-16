@@ -1,7 +1,8 @@
 import { FormType } from "../enums/form-type";
 import {EventForm} from "../forms/event-form";
+import {WorkEvent} from "../workEvent";
 
 export interface EventDialogInject {
-  event?: EventForm;
+  event: WorkEvent;
   type: FormType;
 }

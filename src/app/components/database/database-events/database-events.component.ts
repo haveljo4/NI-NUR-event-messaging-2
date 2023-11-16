@@ -13,6 +13,7 @@ import { FormType } from "src/app/models/enums/form-type";
 import { WorkEvent } from "src/app/models/workEvent";
 import {EventsService} from "../../../services/events.service";
 import {EventDialogInject} from "../../../models/dialog-injects/event-dialog-inject";
+import {EventDialogData} from "../../../models/dialog-data/event-dialog-data";
 
 
 @Component({
@@ -39,6 +40,7 @@ export class DatabaseEventsComponent  implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<WorkEvent> = new MatTableDataSource(this._events);
 
   constructor(
+      private snackBar: MatSnackBar,
       private _dialog: MatDialog,
       private _snackBar: MatSnackBar,
       private _groupService: GroupsService,
@@ -69,7 +71,7 @@ export class DatabaseEventsComponent  implements OnInit, AfterViewInit {
       } as EventDialogInject
     });
     dialog.afterClosed().subscribe((event?: WorkEvent) => {
-      if (event) {
+      if (event){
         this._eventService.add(event);
         this.events = this._eventService.getAll();
         this._snackBar.open("Event added!");

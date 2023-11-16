@@ -14,7 +14,8 @@ export class GroupsService extends AbstractDataService<Group, GroupForm>{
 
     override add(group: GroupForm): void {
     if (!group.name) {
-      throw new Error("Missing name in group");
+        group.name = "undefined"
+      // throw new Error("Missing name in group");
     }
 
     this._elems.push({ id: ++this._maxId, name: group.name });

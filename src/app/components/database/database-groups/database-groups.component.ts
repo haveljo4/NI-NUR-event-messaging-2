@@ -75,9 +75,10 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
         type: FormType.ADD
       } as GroupDialogInject
     });
-    dialog.afterClosed().subscribe((group?: Group) => {
-      if (group) {
-        this._groupsService.add(group);
+    // dialog.disableClose().subscr
+    dialog.afterClosed().subscribe((data?: GroupDialogData) => {
+      if (data?.group) {
+        this._groupsService.add(data.group);
         this.groups = this._groupsService.getAll();
         this._snackBar.open("Group added!");
       }

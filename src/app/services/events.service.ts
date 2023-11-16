@@ -11,9 +11,11 @@ export class EventsService extends AbstractDataService<WorkEvent, WorkEvent>{
   constructor() {
     super(EVENTS);
   }
-  override add(event: EventForm): void {
-    super._elems.push(
-      {id: ++this._maxId, dateTime: "", description: "", name: event.name, participantGroupIds: [], status: ""} as WorkEvent
+  override add(event: WorkEvent): void {
+    // event.id = ++super._maxId;
+    this._elems.push(
+        event
+      // {id: ++this._maxId, dateTime: "", description: "", name: event.name, participantGroupIds: [], status: ""} as WorkEvent
     );
   }
 
