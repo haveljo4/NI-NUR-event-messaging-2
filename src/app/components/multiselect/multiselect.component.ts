@@ -32,6 +32,7 @@ export class MultiselectComponent<T extends DataElement> implements OnInit {
     this.convertElementToString = this.elementService.convertElementToString;
     // easier here to use without slicing, so the newly added alem is visible straight afre adding
     this.allItems = this.elementService.getAll();
+    // this.allItems = [];
     // this.allItems = this.elementService.getAll().slice();
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(""),

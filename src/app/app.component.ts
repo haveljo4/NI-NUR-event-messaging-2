@@ -22,8 +22,15 @@ export class AppComponent implements OnInit {
     public viewContainerRef: ViewContainerRef
   ) {
     // TODO not a nice way how to make the Create new group work (need to init the component to register a callback)
-    viewContainerRef.createComponent(DatabaseGroupsComponent).destroy()
-    viewContainerRef.createComponent(DatabasePeopleComponent).destroy()
+    let  asd = viewContainerRef.createComponent(DatabaseGroupsComponent)
+    let tmp2 = viewContainerRef.createComponent(DatabasePeopleComponent)
+    asd.destroy()
+    tmp2.destroy()
+    // viewContainerRef.createComponent(PersonDialogComponent).destroy()
+
+
+
+    // asd
     // componentFactoryResolver.resolveComponentFactory(DatabaseGroupsComponent).create()
   }
 

@@ -60,7 +60,7 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     private _peopleService: PeopleService,
     private _groupsService: GroupsService
   ) {
-    GlobalDialogCreator.setShowPersonDialogCallback(this.showAddDialog)
+    GlobalDialogCreator.setShowPersonDialogCallback(() => this.showAddDialog())
   }
 
   ngOnInit(): void {
