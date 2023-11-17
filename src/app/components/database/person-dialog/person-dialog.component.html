@@ -1,7 +1,7 @@
 <!-- TODO - add to angular forms -->
 
 <div class="flex-row">
-  <h1 mat-dialog-title>{{data.type}} Person</h1>
+  <h1 mat-dialog-title>{{inject.type}} Person</h1>
   <button mat-button [mat-dialog-close]=null>
     <mat-icon>close</mat-icon>
   </button>
@@ -10,27 +10,31 @@
   <p>Enter full name:</p>
   <mat-form-field appearance="fill">
     <mat-label>First Name</mat-label>
-    <input cdkFocusInitial matInput [(ngModel)]="person.firstName">
+    <input cdkFocusInitial matInput [(ngModel)]="data.person.firstName" required>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Last Name</mat-label>
-    <input matInput [(ngModel)]="person.lastName">
+    <input matInput [(ngModel)]="data.person.lastName" required>
   </mat-form-field>
   <p>Select group:</p>
-  <mat-form-field appearance="fill" class="wide-field">
-    <mat-label>Select</mat-label>
-    <mat-select [(ngModel)]="person.groupId">
-      <mat-option *ngFor="let group of data.groups" [value]="group.id">
-        {{group.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <app-multiselect [elementService]="groupsService"
+                   [searchLabel]="'Search Groups'"
+                   [buttonLabel]="'Add Group'"
+                   [buttonFunction]="addNewGroup"
+                   [preselectedIds]="data.groupIds"
+                   [isReadOnly]=false
+                   (selectedIds)="saveMemberIds($event)">
+  </app-multiselect>
   <p>Enter phone number:</p>
   <mat-form-field appearance="fill" class="wide-field">
     <mat-label>Phone Number</mat-label>
-    <input matInput [(ngModel)]="person.phoneNumber">
+    <input matInput [(ngModel)]="data.person.phoneNumber">
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="wide-field">
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="data.person.email">
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="person" cdkFocusInitial>Save</button>
+  <button mat-button (click)="validateAndClose()"  cdkFocusInitial>Save</button>
 </mat-dialog-actions>

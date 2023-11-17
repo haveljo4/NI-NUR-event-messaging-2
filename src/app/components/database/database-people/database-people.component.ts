@@ -13,8 +13,9 @@ import { ConfirmDialogComponent } from "src/app/components/confirm-dialog/confir
 import { PersonDialogComponent } from "../person-dialog/person-dialog.component";
 import { FormType } from "src/app/models/enums/form-type";
 import { PersonDialogInject } from "src/app/models/dialog-injects/person-dialog-inject";
-import { PersonForm } from "src/app/models/forms/person-form";
 import { GroupsService } from "src/app/services/groups.service";
+import {PersonDialogData} from "../../../models/dialog-data/person-dialog-data";
+import {GlobalDialogCreator} from "../../../services/global.dialog.creator.service";
 
 @Component({
   selector: "app-database-people",
@@ -58,7 +59,9 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
     private _snackBar: MatSnackBar,
     private _peopleService: PeopleService,
     private _groupsService: GroupsService
-  ) { }
+  ) {
+    GlobalDialogCreator.setShowPersonDialogCallback(this.showAddDialog)
+  }
 
   ngOnInit(): void {
     this._loadData();
@@ -84,9 +87,9 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
         type: FormType.ADD
       } as PersonDialogInject
     });
-    dialog.afterClosed().subscribe((person?: PersonForm) => {
-      if (person) {
-        this._peopleService.add(person);
+    dialog.afterClosed().subscribe((data?: PersonDialogData) => {
+      if (data?.person) {
+        this._peopleService.add(data.person);
         this.people = this._peopleService.getAll();
         this._snackBar.open("Person added!");
       }
@@ -115,11 +118,12 @@ export class DatabasePeopleComponent implements OnInit, AfterViewInit {
         type: FormType.EDIT
       } as PersonDialogInject
     });
-    dialog.afterClosed().subscribe((afterClosePerson?: Person) => {
-      if (afterClosePerson) {
-        this._peopleService.editElem(afterClosePerson);
+    dialog.afterClosed().subscribe(( data?: PersonDialogData) => {
+      if (data?.person) {
+        this._snackBar.open("Person dited!: " + data.person.id +" " + data.person.groupIds)
+        this._peopleService.editElem(data.person);
         this.people = this._peopleService.getAll();
-        this._snackBar.open("Person edited!");
+        // this._snackBar.open("Person edited!");
       }
     });
   }

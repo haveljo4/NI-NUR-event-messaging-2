@@ -6,7 +6,6 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 
-import { GroupsService } from "src/app/services/groups.service";
 import { ConfirmDialogComponent } from "src/app/components/confirm-dialog/confirm-dialog.component";
 import { EventDialogComponent } from "../event-dialog/event-dialog.component";
 import { FormType } from "src/app/models/enums/form-type";
@@ -14,7 +13,10 @@ import { WorkEvent } from "src/app/models/workEvent";
 import {EventsService} from "../../../services/events.service";
 import {EventDialogInject} from "../../../models/dialog-injects/event-dialog-inject";
 import {EventDialogData} from "../../../models/dialog-data/event-dialog-data";
-
+import {GroupMessageDialogComponent} from "../../message-dialogs/group-message-dialog/group-message-dialog.component";
+import {GroupMessageDialogInject} from "../../../models/dialog-injects/group-message-dialog-inject";
+import {MessageForm} from "../../../models/forms/message-form";
+import {MessagesService} from "../../../services/messages.service";
 
 @Component({
   selector: "app-database-events",
@@ -32,7 +34,7 @@ export class DatabaseEventsComponent  implements OnInit, AfterViewInit {
   }
 
   displayedColumns: string[] = [
-    "name", "date", "description", "status", "editButton", "deleteButton"
+    "name", "date", "description", "status", "messageButton", "editButton", "deleteButton"
   ];
   filterInput = "";
   @ViewChild(MatSort) sort!: MatSort;
@@ -43,7 +45,7 @@ export class DatabaseEventsComponent  implements OnInit, AfterViewInit {
       private snackBar: MatSnackBar,
       private _dialog: MatDialog,
       private _snackBar: MatSnackBar,
-      private _groupService: GroupsService,
+      private _messagesService: MessagesService,
       private _eventService: EventsService
   ) { }
 
@@ -70,9 +72,9 @@ export class DatabaseEventsComponent  implements OnInit, AfterViewInit {
         type: FormType.ADD
       } as EventDialogInject
     });
-    dialog.afterClosed().subscribe((event?: WorkEvent) => {
-      if (event){
-        this._eventService.add(event);
+    dialog.afterClosed().subscribe((data?: EventDialogData) => {
+      if (data?.event){
+        this._eventService.add(data.event);
         this.events = this._eventService.getAll();
         this._snackBar.open("Event added!");
       }
@@ -100,9 +102,9 @@ export class DatabaseEventsComponent  implements OnInit, AfterViewInit {
         type: FormType.EDIT
       } as EventDialogInject
     });
-    dialog.afterClosed().subscribe((afterCloseEvent?: WorkEvent) => {
-      if (afterCloseEvent) {
-        this._eventService.editElem(afterCloseEvent);
+    dialog.afterClosed().subscribe((afterCloseEvent?: EventDialogData) => {
+      if (afterCloseEvent?.event) {
+        this._eventService.editElem(afterCloseEvent.event);
         this.events = this._eventService.getAll();
         this._snackBar.open("Event edited!");
       }
@@ -111,5 +113,20 @@ export class DatabaseEventsComponent  implements OnInit, AfterViewInit {
 
   private _loadData(): void {
     this.events = this._eventService.getAll();
+  }
+
+  showMessageEventDialog(event: WorkEvent): void {
+    const dialog = this._dialog.open(GroupMessageDialogComponent, {
+      disableClose: true,
+      data: {state: "send"} as GroupMessageDialogInject
+    });
+    dialog.afterClosed().subscribe((message?: MessageForm) => {
+      if (message) {
+        message.eventOrGroupIds.push(event.id)
+        message.type = "event"
+        this._messagesService.add(message);
+        this._snackBar.open("Message sent!");
+      }
+    });
   }
 }

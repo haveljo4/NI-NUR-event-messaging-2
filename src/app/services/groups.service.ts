@@ -7,18 +7,18 @@ import {GROUPS} from "../mocks/GroupsData";
 @Injectable({
   providedIn: "root"
 })
-export class GroupsService extends AbstractDataService<Group, GroupForm>{
+export class GroupsService extends AbstractDataService<Group>{
     constructor() {
         super(GROUPS);
     }
 
-    override add(group: GroupForm): void {
-    if (!group.name) {
-        group.name = "undefined"
-      // throw new Error("Missing name in group");
-    }
+    override add(group: Group): number {
+    // if (!group.name) {
+    //   throw new Error("Missing name in group");
+    // }
 
     this._elems.push({ id: ++this._maxId, name: group.name });
+    return this._maxId;
   }
 
 

@@ -24,7 +24,7 @@
     <mat-label>Status</mat-label>
     <input matInput [(ngModel)]="data.event.status">
   </mat-form-field>
-  <app-multiselect [elementService]="eventsService"
+  <app-multiselect [elementService]="groupsService"
                    [searchLabel]="'Search Groups'"
                    [buttonLabel]="'Add Group'"
                    [buttonFunction]="addNewGroup"

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, Injectable, Input, OnInit, ViewChild} from "@angular/core";
 
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -17,11 +17,13 @@ import {MessageForm} from "../../../models/forms/message-form";
 import {GroupMessageDialogInject} from "../../../models/dialog-injects/group-message-dialog-inject";
 import {GroupDialogData} from "../../../models/dialog-data/group-dialog-data";
 import {PeopleService} from "../../../services/people.service";
+import {GlobalDialogCreator} from "../../../services/global.dialog.creator.service";
 
 @Component({
   selector: "app-database-groups",
   templateUrl: "./database-groups.component.html",
-  styleUrls: ["./database-groups.component.scss"]
+  styleUrls: ["./database-groups.component.scss"],
+  providers: [DatabaseGroupsComponent]
 })
 export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
 
@@ -50,6 +52,8 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     private _messagesService: MessagesService,
     private _peopleService: PeopleService
   ) {
+    // Registering a callback for opening a dialog window
+    GlobalDialogCreator.setShowGroupDialogCallback(() => this.showAddDialog());
   }
 
   ngOnInit(): void {
@@ -68,7 +72,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  showAddDialog(): void {
+  public showAddDialog(): void {
     const dialog = this._dialog.open(GroupDialogComponent, {
       disableClose: true,
       data: {
@@ -78,7 +82,8 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     // dialog.disableClose().subscr
     dialog.afterClosed().subscribe((data?: GroupDialogData) => {
       if (data?.group) {
-        this._groupsService.add(data.group);
+        let groupId = this._groupsService.add(data.group);
+        this._updateGroupIdsInPersonDB(data.membersIds, groupId)
         this.groups = this._groupsService.getAll();
         this._snackBar.open("Group added!");
       }
@@ -86,6 +91,7 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
   }
 
   deleteGroup(group: Group): void {
+    // TODO remove from all people?
     this._groupsService.deleteElem(group.id);
     this.groups = this._groupsService.getAll();
     this._snackBar.open("Group deleted!"); // TODO undo
@@ -98,6 +104,8 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
     });
     dialog.afterClosed().subscribe((message?: MessageForm) => {
       if (message) {
+        message.eventOrGroupIds.push(group.id)
+        message.type = "group"
         this._messagesService.add(message);
         this._snackBar.open("Message sent!");
       }
@@ -119,25 +127,30 @@ export class DatabaseGroupsComponent implements OnInit, AfterViewInit {
 
       if (afterClose.group) {
         this._groupsService.editElem(afterClose.group);
+        this._updateGroupIdsInPersonDB(afterClose.membersIds, afterClose.group.id)
         this.groups = this._groupsService.getAll();
         this._snackBar.open("Group edited!");
       }
 
-      // remove the unassigned people from the group
-      const assigned = this._peopleService.getAll().filter(p => p.groupIds.includes(afterClose.group.id));
-      assigned.filter(p => !afterClose.membersIds.includes(p.id)).forEach(p => {
-        p.groupIds = p.groupIds.filter(id => id !== afterClose.group.id);
-        this._peopleService.editElem(p);
-      });
 
-      // add the newly assigned people to the group
-      afterClose.membersIds.filter(id => !assigned.map(p => p.id).includes(id)).forEach(id => {
-        const person = this._peopleService.getElem(id);
-        if (person) {
-          person.groupIds.push(afterClose.group.id);
-          this._peopleService.editElem(person);
-        }
-      });
+    });
+  }
+
+  private _updateGroupIdsInPersonDB (membersIds : number[], groupId : number) {
+    // remove the unassigned people from the group
+    const assigned = this._peopleService.getAll().filter(p => p.groupIds.includes(groupId));
+    assigned.filter(p => !membersIds.includes(p.id)).forEach(p => {
+      p.groupIds = p.groupIds.filter(id => id !== groupId);
+      this._peopleService.editElem(p);
+    });
+
+    // add the newly assigned people to the group
+    membersIds.filter(id => !assigned.map(p => p.id).includes(id)).forEach(id => {
+      const person = this._peopleService.getElem(id);
+      if (person) {
+        person.groupIds.push(groupId);
+        this._peopleService.editElem(person);
+      }
     });
   }
 

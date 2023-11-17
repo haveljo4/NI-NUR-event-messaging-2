@@ -4,8 +4,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {GroupDialogInject} from "src/app/models/dialog-injects/group-dialog-inject";
 import {PeopleService} from "../../../services/people.service";
 import {GroupDialogData} from "../../../models/dialog-data/group-dialog-data";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {GlobalDialogCreator} from "../../../services/global.dialog.creator.service";
 
 @Component({
   selector: "app-group-dialog",
@@ -22,7 +22,6 @@ export class GroupDialogComponent {
   constructor(private snackBar: MatSnackBar, public dialogRef: MatDialogRef<GroupDialogComponent>, @Inject(MAT_DIALOG_DATA) public inject: GroupDialogInject,
               public peopleService: PeopleService,
   ) {
-
     if (inject.group) {
       this.data = {
         group: inject.group,
@@ -47,8 +46,7 @@ export class GroupDialogComponent {
   }
 
   addNewPerson(): void {
-    // TODO
-    console.log("addNewPerson");
+    GlobalDialogCreator.showAddPersonDialogCallback()
   }
 
   getPeopleInGroupIds(groupId: number): number[] {

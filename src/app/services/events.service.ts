@@ -7,16 +7,16 @@ import {EventForm} from "../models/forms/event-form";
 @Injectable({
   providedIn: "root"
 })
-export class EventsService extends AbstractDataService<WorkEvent, WorkEvent>{
+export class EventsService extends AbstractDataService<WorkEvent>{
   constructor() {
     super(EVENTS);
   }
-  override add(event: WorkEvent): void {
+  override add(event: WorkEvent): number {
     // event.id = ++super._maxId;
     this._elems.push(
-        event
-      // {id: ++this._maxId, dateTime: "", description: "", name: event.name, participantGroupIds: [], status: ""} as WorkEvent
+      {id: ++this._maxId, dateTime: event.dateTime, description: event.description, name: event.name, participantGroupIds: event.participantGroupIds, status: event.status}
     );
+    return this._maxId;
   }
 
   convertElementToString(elem: WorkEvent): string {
