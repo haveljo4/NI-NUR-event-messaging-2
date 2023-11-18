@@ -10,35 +10,24 @@ import {PEOPLE} from "../mocks/PeopleData";
 @Injectable({
   providedIn: "root"
 })
-export class PeopleService extends AbstractDataService<Person, PersonForm>{
+export class PeopleService extends AbstractDataService<Person>{
   constructor(private _groupsService: GroupsService) {
     super(PEOPLE);
   }
 
 
-  override add(person: PersonForm): void {
-    if (!person.groupId || !person.firstName || !person.lastName || !person.phoneNumber) {
-      throw new Error("Person's required properties are undefined");
-    }
-
-    // TODO implement support for multiple groups
-    // let groupNames : string  []  = [];
-    // person.groupId.forEach( i => groupNames.push(<string>this._groupsService.getElem(i)?.name))
-
-    const group = this._groupsService.getElem(person.groupId);
-    if (!group) {
-      throw new Error("GroupId does not exist");
-    }
-
+  override add(person: Person): number {
     this._elems.push({
-      id: ++super._maxId,
-      groupIds: [person.groupId],
+      id: ++this._maxId,
+      groupIds: person.groupIds,
       firstName: person.firstName,
       lastName: person.lastName,
       phoneNumber: person.phoneNumber,
-      email: person.email,
-      groupNames: [group.name]
+      email: person.email
+      // TODO maybe not necessary to show
+      // groupNames: person
     });
+    return this._maxId;
   }
 
 

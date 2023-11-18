@@ -60,7 +60,7 @@ import {MatDividerModule} from "@angular/material/divider";
     GroupMessageDialogComponent,
     EventMessageDialogComponent,
     MessagesComponent,
-    MultiselectComponent,
+    MultiselectComponent
   ],
     imports: [
         BrowserModule,

@@ -7,12 +7,12 @@ import {MessageForm} from "../models/forms/message-form";
 @Injectable({
   providedIn: "root"
 })
-export class MessagesService extends AbstractDataService<Message, Message>{
+export class MessagesService extends AbstractDataService<Message>{
   constructor() {
     super(MESSAGES);
   }
 
-  override add(message: Message | MessageForm): void {
+  override add(message: Message | MessageForm): number {
     if (message.id) {
       this._elems.push(message as Message);
     }
@@ -22,6 +22,7 @@ export class MessagesService extends AbstractDataService<Message, Message>{
         id: ++this._maxId
       } as Message);
     }
+    return this._maxId;
   }
 
   convertElementToString(elem: Message): string {

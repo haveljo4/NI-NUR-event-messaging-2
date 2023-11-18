@@ -11,8 +11,8 @@ import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
   templateUrl: "./multiselect.component.html",
   styleUrls: ["./multiselect.component.scss"],
 })
-export class MultiselectComponent<T extends DataElement, R> implements OnInit {
-  @Input() elementService!: AbstractDataService<T, R>; // Must be initialized, otherwise 💩
+export class MultiselectComponent<T extends DataElement> implements OnInit {
+  @Input() elementService!: AbstractDataService<T>; // Must be initialized, otherwise 💩
   @Input() searchLabel = "";
   @Input() buttonLabel = "";
   @Input() preselectedIds: number[] = [];
@@ -30,7 +30,10 @@ export class MultiselectComponent<T extends DataElement, R> implements OnInit {
 
   ngOnInit(): void {
     this.convertElementToString = this.elementService.convertElementToString;
-    this.allItems = this.elementService.getAll().slice();
+    // easier here to use without slicing, so the newly added alem is visible straight afre adding
+    this.allItems = this.elementService.getAll();
+    // this.allItems = [];
+    // this.allItems = this.elementService.getAll().slice();
     this.filteredOptions = this.searchControl.valueChanges.pipe(
       startWith(""),
       map(value => {

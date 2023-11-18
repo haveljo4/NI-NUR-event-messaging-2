@@ -1,7 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, ComponentFactoryResolver, OnInit, ViewContainerRef} from "@angular/core";
 import { Title } from "@angular/platform-browser";
 
 import { UserService } from "./services/user.service";
+import {GroupDialogComponent} from "./components/database/group-dialog/group-dialog.component";
+import {DatabaseGroupsComponent} from "./components/database/database-groups/database-groups.component";
+import {PersonDialogComponent} from "./components/database/person-dialog/person-dialog.component";
+import {DatabasePeopleComponent} from "./components/database/database-people/database-people.component";
 
 @Component({
   selector: "app-root",
@@ -14,8 +18,21 @@ export class AppComponent implements OnInit {
 
   constructor(
     private _titleService: Title,
-    public userService: UserService
-  ) { }
+    public userService: UserService,
+    public viewContainerRef: ViewContainerRef
+  ) {
+    // TODO not a nice way how to make the Create new group work (need to init the component to register a callback)
+    let  asd = viewContainerRef.createComponent(DatabaseGroupsComponent)
+    let tmp2 = viewContainerRef.createComponent(DatabasePeopleComponent)
+    asd.destroy()
+    tmp2.destroy()
+    // viewContainerRef.createComponent(PersonDialogComponent).destroy()
+
+
+
+    // asd
+    // componentFactoryResolver.resolveComponentFactory(DatabaseGroupsComponent).create()
+  }
 
   ngOnInit(): void {
     this._titleService.setTitle("Organizer 2000");

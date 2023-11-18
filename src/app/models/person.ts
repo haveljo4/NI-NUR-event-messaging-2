@@ -6,5 +6,4 @@ export interface Person extends DataElement{
   lastName: string;
   phoneNumber: string;
   email?: string;
-  groupNames?: string[];
 }

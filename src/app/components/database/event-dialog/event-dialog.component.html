@@ -1,7 +1,7 @@
 <!-- TODO - add to angular forms -->
 
 <div class="flex-row">
-  <h1 mat-dialog-title>{{data.type}} Event</h1>
+  <h1 mat-dialog-title>{{inject.type}} Event</h1>
   <button mat-button [mat-dialog-close]=null>
     <mat-icon>close</mat-icon>
   </button>
@@ -10,26 +10,29 @@
   <p>Enter event name:</p>
   <mat-form-field appearance="fill" class="wide-field">
     <mat-label>Name</mat-label>
-    <input cdkFocusInitial matInput [(ngModel)]="event.name">
+    <input cdkFocusInitial matInput [(ngModel)]="data.event.name" required>
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Date </mat-label>
-    <input matInput [(ngModel)]="event.dateTime">
+    <input matInput [(ngModel)]="data.event.dateTime">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Description</mat-label>
-    <input matInput [(ngModel)]="event.description">
+    <input matInput [(ngModel)]="data.event.description">
   </mat-form-field>
   <mat-form-field appearance="fill">
     <mat-label>Status</mat-label>
-    <input matInput [(ngModel)]="event.status">
+    <input matInput [(ngModel)]="data.event.status">
   </mat-form-field>
-<!--  TODO add groups with the the chips view-->
-  <mat-form-field appearance="fill">
-    <mat-label>Group Ids</mat-label>
-    <input matInput [(ngModel)]="event.participantGroupIds">
-  </mat-form-field>
+  <app-multiselect [elementService]="groupsService"
+                   [searchLabel]="'Search Groups'"
+                   [buttonLabel]="'Add Group'"
+                   [buttonFunction]="addNewGroup"
+                   [preselectedIds]="data.membersIds"
+                   [isReadOnly]=false
+                   (selectedIds)="saveMemberIds($event)">
+  </app-multiselect>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="event" cdkFocusInitial>Save</button>
+  <button mat-button (click)="validateAndClose()" cdkFocusInitial>Save</button>
 </mat-dialog-actions>
